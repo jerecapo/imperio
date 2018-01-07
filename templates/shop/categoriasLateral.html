@@ -1,0 +1,23 @@
+
+<div class="col-md-3 col-md-pull-9 col-sm-12">
+    <!-- widget-search -->
+    <aside class="widget-search mb-30">
+        <form action="#">
+            <input type="text" placeholder="Buscar..." class="typeahead" data-provide="typeahead">
+            <button style="margin-top: -47px;" type="submit"><i class="zmdi zmdi-search"></i></button>
+        </form>
+    </aside>
+    <!-- widget-categories -->
+    <form method="POST" id="form_prod_categoria" action="/shop/shop/">{% csrf_token %}<input type="hidden" name="id_categoria" id="id_categoria"></form>
+    <aside class="widget widget-categories box-shadow mb-30">
+        <h6 class="widget-title border-left mb-20 tituloCategoria">Categorias</h6>
+        <div id="cat-treeview" class="product-cat">
+            <ul>
+                {% for c in categorias %}
+                    <li class="closed"><a class="linkCategoria" href="/shop/shop?categoria_id={{ c.id }}" >{{ c.nombre }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+    
+</div>

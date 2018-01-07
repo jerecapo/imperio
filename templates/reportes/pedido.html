@@ -1,0 +1,145 @@
+{% load staticfiles %}<html>
+
+
+
+    <head>
+
+
+
+        <meta charset="utf-8">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+
+        <meta name="author" content="">
+
+
+
+        <title>Pedido Supergarden</title>
+
+
+
+        <style type="text/css">
+
+            body {
+
+                margin:50px;
+
+            }
+
+            table {
+
+                border-collapse: collapse;
+
+            }
+
+
+
+            table, th, td {
+
+                border: 1px solid black;
+
+            }
+
+            tr {
+
+                height: 20px;
+
+            }
+
+        </style>
+
+        
+
+    </head>
+
+
+
+    <body>
+
+    
+
+        <div style="border: 2px solid black; width:650px; height: 180px;float:left;" id="imagen">
+
+            <div style="margin-left: 35px; margin-top:10px; float:left;" >
+
+                <img width="154" src="{% static 'admin/img/logo_supergarden.jpg' %}" alt="Logo" >
+
+            </div>            <div id="div-border-top" style="border-left: 2px solid black; width:1px; height: 183px; float: left; margin-left: 46px; margin-top: -2px;" ></div>             
+
+            <div style="margin-left: 69px;float:left;" >
+
+                <h2>Pedido:</h2>
+
+                <p>Pedido Nro : {{ pedido.orden_de_venta }}</p>
+
+                <p>Fecha: {{ pedido.fecha|date:"SHORT_DATE_FORMAT" }}</p>
+
+            </div>
+
+        </div>
+
+        
+
+        <div style="width:650px; height: 50px; border: 2px solid black; float:left;" id="cliente">
+
+            <div style="margin-top: 5px; margin-left: 15px;">
+
+                Cliente: {{ pedido.cliente }} <br>
+
+                Direcci&oacute;n: {{ pedido.direccion_envio }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Tel&eacute;fono: {{ pedido.telefono }}
+
+            </div>
+
+        </div>
+
+        
+
+        <div style="width:652px; height: auto; border: 1px solid black; float:left;" id="tablita">
+
+            <table style="width:100%;">
+
+                <tr>
+
+                    <th>CANTIDAD</th>
+
+                    <th>DETALLE</th>
+
+                    <th>P/UNITARIO</th>
+
+                    <th>SUBTOTAL</th>
+
+                </tr>                {% for p in pedido.productopedido_set.all %}                                    <tr>                        <td width="10%">{{ p.cantidad_productos }}</td>                        <td width="70%">{{ p.producto.nombre }}</td>                         <td width="10%">{{ p.precio_venta_distribuidor }}</td>                        <td width="10%">{{ p.total }}</td>                    </tr>                                {% endfor %}
+
+
+
+                {% for o in lineas_prod_extras|make_list %}                    <tr>                        <td width="10%"></td>                        <td width="70%"></td>                         <td width="10%"></td>                        <td width="10%"></td>                    </tr>                {% endfor %}
+
+
+
+                
+
+            </table>
+
+        </div>
+
+        <div style="width:650px; height: 50px; border: 2px solid black; float:left;" id="entrega">
+
+            <div style="margin-top: 5px; margin-left: 15px; width: 180px; float:left;">
+
+                Emitido por: {{ pedido.emitido.first_name }} 
+
+            </div>                        <div style="margin-top: 5px; margin-left: 15px; width: 245px; float:left;">                Forma de Entrega: {{ pedido.metodo_envio }}            </div>                        <div style="margin-top: 5px; margin-left: 15px; width: 250px;  float:left;">                Control de pedido: {{ pedido.armado.first_name }}            </div>                        <div id="div-border-total" style="border-left: 2px solid black; width:1px; height: 56px; float: left; margin-left: 192px; margin-top: -27px;" ></div>                         <div style="margin-top: 5px; margin-left: 10px; float:left; font-weight: bold;">                TOTAL: ${{ total }}            </div>
+
+        </div>
+
+        
+
+    </body>
+
+    
+
+</html>

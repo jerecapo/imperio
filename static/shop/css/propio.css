@@ -1,0 +1,34 @@
+.linkMenu{
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+.linkSubMenu{
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+.linkCategoria{
+    font-family: 'Cinzel', serif !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: #1d072a !important;
+}
+.tituloCategoria{
+    font-family: 'Cinzel', serif !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #225442 !important;
+}
+.nivo-controlNav{
+    display:none;
+}
+.nivo-directionNav{
+    display:none;   
+}
+.letraHeader{
+    float: right;
+    font-size: 11px;
+    font-family: Arial;
+    color: #FFFFFF;
+}

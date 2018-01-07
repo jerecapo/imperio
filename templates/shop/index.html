@@ -1,0 +1,350 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>ImperioShop</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'shop/img/imgAlan/favicon 32x32.png' %}">
+
+    <!-- All CSS Files -->
+    <!-- Bootstrap fremwork main css -->
+    <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}">
+    <!-- Nivo-slider css -->
+    <link rel="stylesheet" href="{% static 'shop/lib/css/nivo-slider.css' %}">
+    <!-- This core.css file contents all plugings css file. -->
+    <link rel="stylesheet" href="{% static 'shop/css/core.css' %}">
+    <!-- Theme shortcodes/elements style -->
+    <link rel="stylesheet" href="{% static 'shop/css/shortcode/shortcodes.css' %}">
+    <!-- Theme main style -->
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <!-- Responsive css -->
+    <link rel="stylesheet" href="{% static 'shop/css/responsive.css' %}">
+    <!-- Template color css -->
+    <link href="{% static 'shop/css/color/skin-green.css' %}" data-style="styles" rel="stylesheet">
+    <!-- User style -->
+    <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}">
+    
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'shop/css/propio.css' %}">
+
+    <!-- Modernizr JS -->
+    <script src="{% static 'shop/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->  
+
+    <!-- Body main wrapper start -->
+    <div class="wrapper">
+        <!-- START HEADER AREA -->
+        <header class="header-area header-wrapper">
+            {% include "shop/header.html" %}  
+            <!-- header-middle-area -->
+            <div id="sticky-header" class="header-middle-area plr-185">
+                <div class="container-fluid">
+                    <div class="full-width-mega-dropdown">
+                        <div class="row">
+                            <!-- logo -->
+                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                <div class="logo">
+                                    <a href="/shop">
+                                        <img width="120" style="margin-top: 7px;" src="{% static 'shop/img/imgAlan/full-logo-header.png' %}" alt="main logo">
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- primary-menu -->
+                            <div class="col-md-8 hidden-sm hidden-xs">
+                                <nav id="primary-menu">
+                                    <ul class="main-menu text-center">
+                                        <li>
+                                            <a class="linkMenu" href="/shop">HOME</a>
+                                        </li>
+                                        <li>
+                                            <a class="linkMenu" href="/shop/shop">PRODUCTOS</a>
+                                            <ul class="dropdwn">
+                                                {% for cat in categorias %}
+                                                <li><a class="linkSubMenu" href="/shop/shop?categoria_id={{ cat.id }}">{{ cat.nombre }}</a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="linkMenu" href="#contactate">NOSOTROS</a>
+                                        </li>
+                                        <li>
+                                            <a class="linkMenu" href="#contactate">CONTACTO</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- header-search & total-cart -->
+                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                <div class="search-top-cart  f-right">
+                                    <div class="header-search f-left">
+                                        <div class="header-search-inner">
+                                           <button class="search-toggle">
+                                            <i class="zmdi zmdi-search"></i>
+                                           </button>
+                                            <form action="#">
+                                                <div class="top-search-box">
+                                                    <input class="typeahead" data-provide="typeahead" type="text" placeholder="Busca tu producto...">
+                                                    <button type="submit">
+                                                        <i class="zmdi zmdi-search"></i>
+                                                    </button>
+                                                </div>
+                                            </form> 
+                                        </div>
+                                    </div>
+                                    <div class="total-cart f-left" id="changuito">
+                                        {% include "shop/cart.html" with chango=chango changuito=changuito %}  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- START MOBILE MENU AREA -->
+        <div class="mobile-menu-area hidden-lg hidden-md hidden-sm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="mobile-menu">
+                            <nav id="dropdown">
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="shop.html">Productos</a></li>
+                                    <li><a href="#">Nosotros</a></li>
+                                    <li><a href="blog.html">Contactate</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MOBILE MENU AREA -->
+
+        <!-- START SLIDER AREA -->
+        <div class="slider-area slider-2">
+            <div class="bend niceties preview-2">
+                <div id="nivoslider-2" class="slides">   
+                    <img style="margin-top: -40;" src="{% static 'shop/img/imgAlan/slider3.png' %}" alt="" title="#slider-direction-1"  />
+                </div>
+            </div>
+        </div>
+        <!-- END SLIDER AREA -->
+
+        <!-- START PAGE CONTENT -->
+        <section id="page-content" class="page-wrapper">
+
+            <!-- BANNER-SECTION START -->
+            <div class="banner-section ptb-60" style="/*background-image: url({% static 'shop/img/imgAlan/paredladrillos10.png' %});*/">
+                <div class="container">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12" >
+                                <div class="section-title text-center mb-40">
+                                    <h2 class="uppercase" style="font-family: 'Cinzel', serif;">OFERTAS</h2>
+                                    <h4 style="font-family: 'Crimson';">QUE LE PODEMOS PONER ACA ? NADA ?</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- banner-item start -->
+                        {% for oferta in ofertas %}
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="banner-item banner-2">
+                                <div class="banner-img">
+                                    <a href="/shop/producto?id={{ oferta.id }}"><img style="width:360px; height:280px;" src="{{ oferta.dameFotoOferta }}" alt=""></a>
+                                </div>
+                                <!--h3 class="banner-title-2"><a href="#">{{ oferta.nombre }}</a></h3 -->
+                                <h3 class="pro-price">$ {{ oferta.precio_venta_publico }}</h3>
+                                <div class="banner-button">
+                                   <a href="/shop/producto?id={{ oferta.id }}">VER EN TIENDA <i class="zmdi zmdi-long-arrow-right"></i></a> 
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <hr style="padding-top:25px">
+                </div>
+            </div> 
+            <!-- BANNER-SECTION END --> 
+
+            <!-- BANNER-SECTION START -->
+            <div class="banner-section ptb-60" style="margin-top: -70px;/*background-image: url({% static 'shop/img/imgAlan/paredladrillos20.png' %});*/">
+                <div class="container">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12" >
+                                <div class="section-title text-center mb-40">
+                                    <h2 class="uppercase" style="font-family: 'Cinzel', serif;">PRODUCTOS DESTACADOS</h2>
+                                    <h4 style="font-family: 'Crimson';">QUE LE PODEMOS PONER ACA ? NADA ?</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- banner-item start -->
+                        {% for destacado in destacados %}
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="banner-item banner-2">
+                                <div class="banner-img">
+                                    <a href="/shop/producto?id={{ destacado.id }}"><img style="width:360px; height:280px;" src="{{ destacado.dameFotoOferta }}" alt=""></a>
+                                </div>
+                                <!--h3 class="banner-title-2"><a href="#">{{ destacado.nombre }}</a></h3 -->
+                                <h3 class="pro-price">$ {{ destacado.precio_venta_publico }}</h3>
+                                <div class="banner-button">
+                                   <a href="/shop/producto?id={{ destacado.id }}">VER EN TIENDA <i class="zmdi zmdi-long-arrow-right"></i></a> 
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!-- banner-item end -->
+                    </div>
+                    <hr style="padding-top:25px">
+                </div>
+            </div> 
+            <!-- BANNER-SECTION END --> 
+        </section>
+        <!-- END PAGE CONTENT -->
+
+        <!-- Start page content -->
+        <section id="contactate" class="page-wrapper">
+
+            <div class="address-section mb-80" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-title text-center mb-20">
+                                <h2 class="uppercase">CONTACTATE CON IMPERIO VERDE</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADDRESS SECTION START -->
+            <div class="address-section mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12">
+                            <div class="contact-address box-shadow">
+                                <i class="zmdi zmdi-pin"></i>
+                                <h6 style="font-family:'Crimson';"> C1431FBR, Avenida Triunvirato 4135, </h6>
+                                <h6 style="font-family:'Crimson';">Local 5 y 7, C1431FBR CABA</h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <div class="contact-address box-shadow">
+                                <i class="zmdi zmdi-phone"></i>
+                                <h6 style="font-family:'Crimson';">(+54 9) 11 4521-4080</h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <div class="contact-address box-shadow">
+                                <i class="zmdi zmdi-email"></i>
+                                <h6 style="font-family:'Crimson';">contacto@imperioverdegrowshop.com</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ADDRESS SECTION END --> 
+            
+            <!-- GOOGLE MAP SECTION START -->
+            <div class="google-map-section">
+                <div class="container-fluid">
+                    <div class="google-map plr-185">
+                        <div id="googleMap"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- GOOGLE MAP SECTION END -->
+            
+            <!-- MESSAGE BOX SECTION START -->
+            <div class="message-box-section mt--50 mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="message-box box-shadow white-bg">
+                                <form id="contact-form" action="mail.php" method="post">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="blog-section-title border-left mb-30">CONTACTATE</h4>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="name" placeholder="Nombre">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="email" placeholder="Email">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="subject" placeholder="Asunto">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="phone" placeholder="Telefono">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <textarea class="custom-textarea" name="message" placeholder="Mensaje"></textarea>
+                                            <button class="submit-btn-1 mt-30 btn-hover-1" type="submit">Enviar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <p class="form-messege"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MESSAGE BOX SECTION END --> 
+        </section>
+
+        {% include "shop/footer.html" %} 
+
+    </div>
+    <!-- Body main wrapper end -->
+
+
+    <!-- Placed JS at the end of the document so the pages load faster -->
+
+    <!-- jquery latest version -->
+    <script src="{% static 'shop/js/vendor/jquery-3.1.1.min.js' %}"></script>
+    <!-- Bootstrap framework js -->
+    <script src="{% static 'shop/js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'shop/js/autocomplete.js' %}"></script>
+    <!-- jquery.nivo.slider js -->
+    <script src="{% static 'shop/lib/js/jquery.nivo.slider.js' %}"></script>
+    <!-- All js plugins included in this file. -->
+    <script src="{% static 'shop/js/plugins.js' %}"></script>
+    <!-- Main js file that contents all jQuery plugins activation. -->
+    <script src="{% static 'shop/js/main.js' %}"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv_riX7YWetQhPET0s1rF2oku0SroiWxw"></script>
+    <script src="{% static 'shop/js/map.js' %}"></script>
+
+    <script src="{% static 'shop/js/propio.js' %}"></script>
+
+    <script type="text/javascript">
+        
+        activarAutocomplete();
+
+    </script>
+
+</body>
+
+</html>

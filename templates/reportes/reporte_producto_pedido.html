@@ -1,0 +1,113 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Reporte Clientes Productos</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <style type="text/css">
+
+        </style>
+
+        <script>
+            function filtrar(){
+                var fechaDesde = $( "#fechaDesde" ).val().replace("/", "-");
+                var fechaHasta = $( "#fechaHasta" ).val().replace("/", "-");
+                var sucursal   = $( "#selectSucursal" ).val()
+                var param = "/reporte_producto_pedido/?fechaDesde=" + fechaDesde + "&fechaHasta=" + fechaHasta + "&sucursal=" + sucursal;
+
+                var form = $(document.createElement('form'));
+                $(form).attr("action", param);
+                $(form).attr("method", "POST");
+                $(form).submit();
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h3> Reporte Producto Pedido </h3>
+            <a href="/descargar_excel_producto_pedido/?fechaDesde={{ fechaDesde }}&fechaHasta={{ fechaHasta }}&sucursalid={{ sucursalid }}">Descargar Excel</a>
+            <br>
+            <br>
+            <form class="form-inline">
+                <div style="max-width: 200px;" class="form-group">
+                    <label for="exampleInputEmail1">Fecha desde</label>
+                    <input type="date" class="form-control" id="fechaDesde" value="{{ fechaDesde }}" placeholder="fecha desde">
+                </div>
+
+                <div style="max-width: 200px;" class="form-group">
+                    <label for="exampleInputPassword1">Fecha hasta</label>
+                    <input type="date" class="form-control" id="fechaHasta" value="{{ fechaHasta }}" placeholder="fecha hasta">
+                </div>
+                
+                <div style="max-width: 170px;" class="form-group">
+                    <label for="selectSucursal">Sucursal</label>
+                    <select id="selectSucursal" class="form-control">
+                        <option value="0">TODAS</option>
+                        {% for s in sucursales %}
+                            <option value="{{ s.id }}">{{ s.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <button type="button" onclick="filtrar();" class="btn btn-primary">Filtrar</button>
+            </form>
+
+            <div style="width: 525px;">
+                <p class="bg-success"> Fecha desde: {{ fechaDesde }} || Fecha hasta: {{ fechaHasta }} || Sucursal: {{ sucursal }}</p>
+            </div>              
+            <br>            
+
+            <div id="resultados">
+
+                <table class="table table-striped" >
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Orden de Venta</th>
+                        <th>Cliente</th>
+                        <th>Producto</th>
+                        <th>Precio $$</th>
+                        <th>Cantidad</th>
+                        <th>Descuento $$</th>
+                        <th>Total $$</th>
+                        
+                    </tr> 
+                    {% for l in lista %}
+                    <tr>
+                        <td>{{ l|get_item:'fecha' }}</td> 
+                        <td>{{ l|get_item:'orden_de_venta' }}</td> 
+                        <td>{{ l|get_item:'cliente' }}</td> 
+                        <td>{{ l|get_item:'nombre' }}</td> 
+                        <td>{{ l|get_item:'precio' }}</td> 
+                        <td>{{ l|get_item:'cantidad' }}</td> 
+                        <td>{{ l|get_item:'descuento' }}</td> 
+                        <td>{{ l|get_item:'total' }}</td> 
+                    </tr>  
+                    {% endfor %}
+
+                    <tr class="success">
+                        <td>Total</td>
+                        <td>$$ {{ total }}</td>
+                        <td>Cant: {{ cant }}</td>
+                    </tr>  
+                </table>
+
+            </div>
+        </div>
+    </body>
+</html>

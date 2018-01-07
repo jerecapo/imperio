@@ -1,0 +1,170 @@
+    {% load staticfiles %}
+
+    <html>
+
+
+
+        <head>
+
+
+
+            <meta charset="utf-8">
+
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <meta name="description" content="">
+
+            <meta name="author" content="">
+
+
+
+            <title>Reporte Clientes Productos</title>
+
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+            <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+
+            <!-- link rel="stylesheet" href="/resources/demos/style.css" -->
+
+
+
+            <!-- Latest compiled and minified CSS -->
+
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+
+
+            <!-- Optional theme -->
+
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+            <!-- Latest compiled and minified JavaScript -->
+
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        </head>
+
+
+
+        <body>
+
+            <div class="container">
+
+                <h3> Reporte Clientes Productos </h3>
+
+                <form class="form-inline" action="/reporte_cliente_productos/" method="POST">{% csrf_token %}
+
+                    <div style="max-width: 200px;" class="form-group">
+
+                        <label for="exampleInputEmail1">Fecha desde</label>
+
+                        <input type="date" class="form-control" id="fechaDesde" name="fechaDesde" value="{{ fechaDesde }}" placeholder="fecha desde">
+
+                    </div>
+
+                    <div style="max-width: 200px;" class="form-group">
+
+                        <label for="exampleInputPassword1">Fecha hasta</label>
+
+                        <input type="date" class="form-control" id="fechaHasta" name="fechaHasta" value="{{ fechaHasta }}" placeholder="fecha hasta">
+
+                    </div>
+
+                    <div style="max-width: 170px;" class="form-group">
+
+                        <label for="selectSucursal">Sucursal</label>
+
+                        <select id="selectSucursal" name="selectSucursal" class="form-control">
+
+                            {% if todas_sucursales %}
+                                <option value="0">TODAS</option>
+                            {% endif %}
+
+                            {% for s in sucursales %}
+                                <option value="{{ s.id }}">{{ s.nombre }}</option>
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+
+                </form>
+
+
+
+                <div style="width: 525px;">
+
+                    <p class="bg-success"> Fecha desde: {{ fechaDesde }} || Fecha hasta: {{ fechaHasta }} || Sucursal: {{ sucursal }}</p>
+
+                </div>          
+
+
+
+                <br>            
+
+
+
+                <div id="resultados">
+
+                <table class="table table-striped" >
+
+                    <tr>
+
+                        <th>Cliente</th>
+
+                        <th>Cantidad</th>
+                        <th>Costo $$ &nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>Venta $$ &nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th>Ganancia $$&nbsp;&nbsp;</th>
+
+                    </tr> 
+
+                    {% for key, values in dict.items %}
+
+                    <tr>
+                        <td>{{key}}</td>
+                        <td>{{ values|get_item:'cantidad' }}</td> 
+                        <td>{{ values|get_item:'costo' }}</td> 
+                        <td>{{ values|get_item:'venta' }}</td> 
+                        <td>{{ values|get_item:'ganancia' }}</td> 
+                    </tr>   
+
+                    {% endfor %}
+
+                    <tr class="success">
+
+                        <td>Total</td>
+                        <td>{{ cant }}</td>
+                        <td>$  {{ costo }}</td>
+                        <td>$  {{ venta }}</td>
+                        <td>$  {{ ganancia }}</td>
+
+                    </tr>  
+
+                </table>
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </body>
+
+        
+
+    </html>
