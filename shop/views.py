@@ -69,6 +69,27 @@ def producto(request):
             }
     return render(request, 'shop/producto.html', context)
 
+def carretilla(request):
+    mensaje             = ''
+    categorias          = Categoria.objects.filter(shop=True).order_by('orden')
+    changuito           = get_changuito(request)
+    chango              = get_chango(request)
+    cantProd, totalProd = get_chango_valores_total(changuito)
+    adicTarjeta         = (11*totalProd/100)
+    totalConTarjeta     = totalProd + adicTarjeta
+
+    context = { 'mensaje': mensaje,
+                'categorias':categorias,
+                'producto':producto,
+                'changuito':changuito,
+                'chango':chango,
+                'cantProd':cantProd,
+                'totalProd':totalProd,
+                'adicTarjeta':adicTarjeta,
+                'totalConTarjeta':totalConTarjeta,
+            }
+    return render(request, 'shop/carretilla.html', context)
+
 def addProductCart(request):
     id_prod             = request.POST.get('id_prod_add', '')
     changuito           = get_changuito(request)
@@ -163,3 +184,7 @@ def get_item(dictionary, key):
 @register.filter
 def get_comentario_producto(comentario, id):
     return Producto.objects.get(id=id).comentario()
+
+@register.filter
+def multiply(value, arg):
+    return value*arg

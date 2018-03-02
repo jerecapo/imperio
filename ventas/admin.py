@@ -69,30 +69,17 @@ class PedidoAdmin(admin.ModelAdmin):
                 #devolverStock()
                 for pp in obj.productopedido_set.all():
                     stock = pp.cantidad_productos
-                    for s in pp.producto.stock_set.all():
-                        if s.actual != s.inicial and stock != 0:
-                            diff = s.inicial - s.actual
-                            if stock < diff:
-                                s.actual = s.actual + stock
-                                stock = 0
-                            else:
-                                s.actual = s.inicial
-                                stock = stock - diff
-                            s.save()
+                    producto = pp.producto
+                    producto.stocks = producto.stocks + stock
+                    producto.save()
                 mensaje = "Se devolvio el stock por CANCELAR el pedido."      
             elif p.estado.id != 11 and p.estado.id != 5 and obj.estado.id == 5:
                 #restarStock()
                 for pp in obj.productopedido_set.all():
                     stock = pp.cantidad_productos
-                    for s in pp.producto.stock_set.all():
-                        if s.actual != 0 and stock != 0:
-                            if stock < s.actual:
-                                s.actual = s.actual - stock
-                                stock = 0
-                            else:
-                                stock = stock - s.actual
-                                s.actual = 0
-                            s.save()
+                    producto = pp.producto
+                    producto.stocks = producto.stocks - stock
+                    producto.save()
                 mensaje = "Se resto el stock por FINALIZAR el pedido."
             else:
                 mensaje = ""   
@@ -145,11 +132,11 @@ class ProductoAdmin(admin.ModelAdmin):
     inlines = [
         StockInline, ComentarioProductoInline, EtiquetasProductoInline, ImagenProductoInline
     ]
-    list_display = ('nombre', 'categoria', 'precio_costo', 'precio_venta_distribuidor','precio_venta_publico','shop','oferta','destacado')
+    list_display = ('nombre', 'categoria', 'precio_costo', 'precio_venta_distribuidor','precio_venta_publico','stocks','shop','oferta','destacado')
     fieldsets = (
         ('Principal', {
             'classes': ('wide', 'extrapretty'),
-            'fields': ('nombre', 'categoria', 'precio_costo', 'precio_venta_distribuidor','precio_venta_publico','shop','oferta','destacado')
+            'fields': ('nombre', 'categoria', 'precio_costo', 'precio_venta_distribuidor','precio_venta_publico','stocks','shop','oferta','destacado')
         }),
     )
 

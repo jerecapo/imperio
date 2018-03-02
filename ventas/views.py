@@ -410,6 +410,17 @@ def descargar_excel_producto_pedido(request):
     response.write(xlsx_data) 
     return response
 
+@login_required
+def normalizar_stock(request):
+    productos = Producto.objects.all()
+    for prod in productos:
+        total = 0
+        for prod_stock in prod.stock_set.all():
+            total = total + prod_stock.actual
+        prod.stocks = total
+        prod.save()
+    return HttpResponse("Listo")
+
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)

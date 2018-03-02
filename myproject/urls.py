@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^dashboard/', 'ventas.views.dashboard', name='dashboard'),
     url(r'^imprimir/', 'ventas.views.imprimir', name='imprimir'),
     url(r'^importar/', 'ventas.views.importar', name='importar'),
+    url(r'^normalizar_stock/', 'ventas.views.normalizar_stock', name='normalizar_stock'),
     url(r'^descargar_excel_productos/', 'ventas.views.descargar_excel_productos', name='descargar_excel_productos'),
     url(r'^descargar_excel_clientes/', 'ventas.views.descargar_excel_clientes', name='descargar_excel_clientes'),
     url(r'^descargar_excel_producto_pedido/', 'ventas.views.descargar_excel_producto_pedido', name='descargar_excel_producto_pedido'),

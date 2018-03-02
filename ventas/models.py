@@ -91,6 +91,7 @@ class Producto(models.Model):
     precio_venta_distribuidor = models.FloatField('Precio Venta Distribuidor',default=0)
     precio_venta_publico = models.FloatField('Precio Venta Publico',default=0)
     precio_costo = models.FloatField('Precio Costo',default=0)
+    stocks = models.FloatField('Stock',default=0)
     shop = models.BooleanField('Shop', default=False)
     oferta = models.BooleanField('Oferta', default=False)
     destacado = models.BooleanField('Destacado', default=False)

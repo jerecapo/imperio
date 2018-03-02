@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^addProductCart/', 'shop.views.addProductCart', name='addProductCart'),
     url(r'^lessProductCart/', 'shop.views.lessProductCart', name='lessProductCart'),
     
+    url(r'^carretilla/', 'shop.views.carretilla', name='carretilla'),
     url(r'^shop/', 'shop.views.shop', name='shop'),
     url(r'^producto/', 'shop.views.producto', name='producto'),
     url(r'^$', 'shop.views.index', name='index'),

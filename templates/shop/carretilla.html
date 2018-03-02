@@ -1,0 +1,656 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>ImperioShop</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'shop/img/imgAlan/favicon 32x32.png' %}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- All CSS Files -->
+    <!-- Bootstrap fremwork main css -->
+    <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}">
+    <!-- Nivo-slider css -->
+    <link rel="stylesheet" href="{% static 'shop/lib/css/nivo-slider.css' %}">
+    <!-- This core.css file contents all plugings css file. -->
+    <link rel="stylesheet" href="{% static 'shop/css/core.css' %}">
+    <!-- Theme shortcodes/elements style -->
+    <link rel="stylesheet" href="{% static 'shop/css/shortcode/shortcodes.css' %}">
+    <!-- Theme main style -->
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <!-- Responsive css -->
+    <link rel="stylesheet" href="{% static 'shop/css/responsive.css' %}">
+    <!-- Template color css -->
+    <link href="{% static 'shop/css/color/color-core.css' %}" data-style="styles" rel="stylesheet">
+    <!-- User style -->
+    <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,600i,700,700i" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'shop/css/propio.css' %}">
+    <!-- Modernizr JS -->
+    <script src="{% static 'shop/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->  
+
+    <!-- Body main wrapper start -->
+    <div class="wrapper">
+
+        <header class="header-area header-wrapper">
+            {% include "shop/header.html" %}  
+            <!-- header-middle-area -->
+            <div id="sticky-header" class="header-middle-area plr-185">
+                <div class="container-fluid">
+                    <div class="full-width-mega-dropdown">
+                        <div class="row">
+                            <!-- logo -->
+                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                <div class="logo">
+                                    <a href="index.html">
+                                        <img width="120" style="margin-top: 7px;"src="{% static 'shop/img/imgAlan/full-logo-header.png' %}" alt="main logo">
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- primary-menu -->
+                            <div class="col-md-8 hidden-sm hidden-xs">
+                                <nav id="primary-menu">
+                                    <ul class="main-menu text-center">
+                                        <li>
+                                            <a class="linkMenu" href="/shop">HOME</a>
+                                        </li>
+                                        <li>
+                                            <a class="linkMenu" href="/shop/shop">PRODUCTOS</a>
+                                            <ul class="dropdwn">
+                                                {% for cat in categorias %}
+                                                <li><a class="linkSubMenu" href="/shop/shop?categoria_id={{ cat.id }}">{{ cat.nombre }}</a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="linkMenu" href="/shop#contactate">NOSOTROS</a>
+                                        </li>
+                                        <li>
+                                            <a class="linkMenu" href="/shop#contactate">CONTACTO</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- header-search & total-cart -->
+                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                <div class="search-top-cart  f-right">
+                                    <!-- total-cart -->
+                                    <div class="total-cart f-left" id="changuito">
+                                        {% include "shop/cart.html" with chango=chango changuito=changuito %}  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- START MOBILE MENU AREA -->
+        <div class="mobile-menu-area hidden-lg hidden-md hidden-sm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="mobile-menu">
+                            <nav id="dropdown">
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="shop.html">Productos</a></li>
+                                    <li><a href="#">Nosotros</a></li>
+                                    <li><a href="blog.html">Contactate</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MOBILE MENU AREA -->
+
+        <!-- BREADCRUMBS SETCTION START -->
+        <div class="breadcrumbs-section plr-200 mb-80">
+            <div class="breadcrumbs overlay-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="breadcrumbs-inner">
+                                <h1 class="breadcrumbs-title"></h1>
+                                <ul class="">
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- BREADCRUMBS SETCTION END -->
+
+        <!-- Start page content -->
+        <div id="page-content" class="page-wrapper">
+
+            <!-- SHOP SECTION START -->
+            <div class="shop-section mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12">
+                            <ul class="cart-tab">
+                                <li>
+                                    <a class="active" href="#shopping-cart" data-toggle="tab">
+                                        <span>01</span>
+                                        Carretilla
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#checkout" data-toggle="tab">
+                                        <span>02</span>
+                                        Pagar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#order-complete" data-toggle="tab">
+                                        <span>03</span>
+                                        Fin
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- shopping-cart start -->
+                                <div class="tab-pane active" id="shopping-cart">
+                                    <div class="shopping-cart-content">
+                                        <form action="#">
+                                            <div class="table-content table-responsive mb-50">
+                                                <table class="text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="product-thumbnail">Producto</th>
+                                                            <th class="product-price">Precio</th>
+                                                            <th class="product-quantity">Cantidad</th>
+                                                            <th class="product-subtotal">Total</th>
+                                                            <th class="product-remove">Quitar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- tr -->
+                                                        {% for prod in chango %}
+
+                                                        <tr>
+                                                            <td class="product-thumbnail">
+                                                                <div class="pro-thumbnail-img">
+                                                                    <img style="width: 75px;" src="{{ prod.dameFotoChango }}" alt="{{ prod.nombre }}">
+                                                                </div>
+                                                                <div class="pro-thumbnail-info text-left">
+                                                                    <h6 class="product-title-2">
+                                                                        <a href="#">{{ prod.nombre }}</a>
+                                                                    </h6>
+                                                                </div>
+                                                            </td>
+                                                            <td class="product-price">${{ prod.precio_venta_publico }}</td>
+                                                            <!--td class="product-quantity">
+                                                                <div class="cart-plus-minus f-left">
+                                                                    <input type="text" value="{{ changuito|get_item:prod.id }}" name="qtybutton" class="cart-plus-minus-box">
+                                                                </div> 
+                                                            </td-->
+                                                            <td class="product-quantity">
+                                                                <input type="text" maxlength="4" style="font-size: 21px; width: 45px;margin-bottom: 0px;padding-left: 0px;" value="{{ changuito|get_item:prod.id }}" name="qtybutton{{ prod.id }}">
+                                                            </td>
+                                                            {% with cantidad=changuito|get_item:prod.id %}  
+                                                            <td class="product-subtotal">${{ prod.precio_venta_publico|multiply:cantidad }}</td>
+                                                            {% endwith %}
+                                                            <td class="product-remove">
+                                                                <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                                            </td>
+                                                        </tr>
+
+                                                        {% endfor %}
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="row">
+                                                <!--div class="col-md-6">
+                                                    <div class="coupon-discount box-shadow p-30 mb-50">
+                                                        <h6 class="widget-title border-left mb-20">coupon discount</h6>
+                                                        <p>Enter your coupon code if you have one!</p>
+                                                        <input type="text" name="name" placeholder="Enter your code here.">
+                                                        <button class="submit-btn-1 black-bg btn-hover-2" type="submit">apply coupon</button>
+                                                    </div>
+                                                </div-->
+                                                <div class="col-md-6">
+                                                    <div class="payment-details box-shadow p-30 mb-50">
+                                                        <h6 class="widget-title border-left mb-20">Detalle del pago</h6>
+                                                        <table>
+                                                            <tr>
+                                                                <td class="td-title-1">Carretilla SubTotal</td>
+                                                                <td class="td-title-2">${{ totalProd }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="td-title-1">Pago Con Tarjeta (11%)</td>
+                                                                <td class="td-title-2">${{ adicTarjeta }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="order-total">Total</td>
+                                                                <td class="order-total-price">${{ totalConTarjeta }}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="culculate-shipping box-shadow p-30">
+                                                        <h6 class="widget-title border-left mb-20">culculate shipping</h6>
+                                                        <p>Enter your coupon code if you have one!</p>
+                                                        <div class="row">
+                                                            <div class="col-sm-4 col-xs-12">
+                                                                <input type="text"  placeholder="Country">
+                                                            </div>
+                                                            <div class="col-sm-4 col-xs-12">
+                                                                <input type="text"  placeholder="Region / State">
+                                                            </div>
+                                                            <div class="col-sm-4 col-xs-12">
+                                                                <input type="text"  placeholder="Post code">
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <button class="submit-btn-1 black-bg btn-hover-2">get a quote</button>   
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div-->
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- shopping-cart end -->
+                                <!-- wishlist start -->
+                                <div class="tab-pane" id="wishlist">
+                                    <div class="wishlist-content">
+                                        <form action="#">
+                                            <div class="table-content table-responsive mb-50">
+                                                <table class="text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="product-thumbnail">product</th>
+                                                            <th class="product-price">price</th>
+                                                            <th class="product-stock">Stock status</th>
+                                                            <th class="product-add-cart">add to cart</th>
+                                                            <th class="product-remove">remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- tr -->
+                                                        <tr>
+                                                            <td class="product-thumbnail">
+                                                                <div class="pro-thumbnail-img">
+                                                                    <img src="img/cart/1.jpg" alt="">
+                                                                </div>
+                                                                <div class="pro-thumbnail-info text-left">
+                                                                    <h6 class="product-title-2">
+                                                                        <a href="#">dummy product name</a>
+                                                                    </h6>
+                                                                    <p>Brand: Brand Name</p>
+                                                                    <p>Model: Grand s2</p>
+                                                                    <p> Color: Black, White</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="product-price">$560.00</td>
+                                                            <td class="product-stock text-uppercase">in stoct</td>
+                                                            <td class="product-add-cart">
+                                                                <a href="#" title="Add To Cart">
+                                                                    <i class="zmdi zmdi-shopping-cart-plus"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td class="product-remove">
+                                                                <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        <!-- tr -->
+                                                        <tr>
+                                                            <td class="product-thumbnail">
+                                                                <div class="pro-thumbnail-img">
+                                                                    <img src="img/cart/2.jpg" alt="">
+                                                                </div>
+                                                                <div class="pro-thumbnail-info text-left">
+                                                                    <h6 class="product-title-2">
+                                                                        <a href="#">dummy product name</a>
+                                                                    </h6>
+                                                                    <p>Brand: Brand Name</p>
+                                                                    <p>Model: Grand s2</p>
+                                                                    <p> Color: Black, White</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="product-price">$560.00</td>
+                                                            <td class="product-stock text-uppercase">in stoct</td>
+                                                            <td class="product-add-cart">
+                                                                <a href="#" title="Add To Cart">
+                                                                    <i class="zmdi zmdi-shopping-cart-plus"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td class="product-remove">
+                                                                <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        <!-- tr -->
+                                                        <tr>
+                                                            <td class="product-thumbnail">
+                                                                <div class="pro-thumbnail-img">
+                                                                    <img src="img/cart/3.jpg" alt="">
+                                                                </div>
+                                                                <div class="pro-thumbnail-info text-left">
+                                                                    <h6 class="product-title-2">
+                                                                        <a href="#">dummy product name</a>
+                                                                    </h6>
+                                                                    <p>Brand: Brand Name</p>
+                                                                    <p>Model: Grand s2</p>
+                                                                    <p> Color: Black, White</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="product-price">$560.00</td>
+                                                            <td class="product-stock text-uppercase">in stoct</td>
+                                                            <td class="product-add-cart">
+                                                                <a href="#" title="Add To Cart">
+                                                                    <i class="zmdi zmdi-shopping-cart-plus"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td class="product-remove">
+                                                                <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- wishlist end -->
+                                <!-- checkout start -->
+                                <div class="tab-pane" id="checkout">
+                                    <div class="checkout-content box-shadow p-30">
+                                        <form action="#">
+                                            <div class="row">
+                                                <!-- billing details -->
+                                                <div class="col-md-6">
+                                                    <div class="billing-details pr-10">
+                                                        <h6 class="widget-title border-left mb-20">billing details</h6>
+                                                        <input type="text"  placeholder="Your Name Here...">
+                                                        <input type="text"  placeholder="Email address here...">
+                                                        <input type="text"  placeholder="Phone here...">
+                                                        <input type="text"  placeholder="Company neme here...">
+                                                        <select class="custom-select">
+                                                            <option value="defalt">country</option>
+                                                            <option value="c-1">Australia</option>
+                                                            <option value="c-2">Bangladesh</option>
+                                                            <option value="c-3">Unitd States</option>
+                                                            <option value="c-4">Unitd Kingdom</option>
+                                                        </select>
+                                                        <select class="custom-select">
+                                                            <option value="defalt">State</option>
+                                                            <option value="c-1">Melbourne</option>
+                                                            <option value="c-2">Dhaka</option>
+                                                            <option value="c-3">New York</option>
+                                                            <option value="c-4">London</option>
+                                                        </select>
+                                                        <select class="custom-select">
+                                                            <option value="defalt">Town/City</option>
+                                                            <option value="c-1">Victoria</option>
+                                                            <option value="c-2">Chittagong</option>
+                                                            <option value="c-3">Boston</option>
+                                                            <option value="c-4">Cambridge</option>
+                                                        </select>
+                                                        <textarea class="custom-textarea" placeholder="Your address here..."></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!-- our order -->
+                                                    <div class="payment-details pl-10 mb-50">
+                                                        <h6 class="widget-title border-left mb-20">our order</h6>
+                                                        <table>
+                                                            <tr>
+                                                                <td class="td-title-1">Dummy Product Name x 2</td>
+                                                                <td class="td-title-2">$1855.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="td-title-1">Dummy Product Name</td>
+                                                                <td class="td-title-2">$555.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="td-title-1">Cart Subtotal</td>
+                                                                <td class="td-title-2">$2410.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="td-title-1">Shipping and Handing</td>
+                                                                <td class="td-title-2">$15.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="td-title-1">Vat</td>
+                                                                <td class="td-title-2">$00.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="order-total">Order Total</td>
+                                                                <td class="order-total-price">$2425.00</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div> 
+                                                    <!-- payment-method -->
+                                                    <div class="payment-method">
+                                                        <h6 class="widget-title border-left mb-20">payment method</h6>
+                                                        <div id="accordion">
+                                                            <div class="panel">
+                                                                <h4 class="payment-title box-shadow">
+                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#bank-transfer" >
+                                                                    direct bank transfer
+                                                                    </a>
+                                                                </h4>
+                                                                <div id="bank-transfer" class="panel-collapse collapse in" >
+                                                                    <div class="payment-content">
+                                                                    <p>Lorem Ipsum is simply in dummy text of the printing and type setting industry. Lorem Ipsum has been.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel">
+                                                                <h4 class="payment-title box-shadow">
+                                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                                                    cheque payment
+                                                                    </a>
+                                                                </h4>
+                                                                <div id="collapseTwo" class="panel-collapse collapse">
+                                                                    <div class="payment-content">
+                                                                        <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p> 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel">
+                                                                <h4 class="payment-title box-shadow">
+                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" >
+                                                                    paypal
+                                                                    </a>
+                                                                </h4>
+                                                                <div id="collapseThree" class="panel-collapse collapse" >
+                                                                    <div class="payment-content">
+                                                                        <p>Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.</p>
+                                                                        <ul class="payent-type mt-10">
+                                                                            <li><a href="#"><img src="img/payment/1.png" alt=""></a></li>
+                                                                            <li><a href="#"><img src="img/payment/2.png" alt=""></a></li>
+                                                                            <li><a href="#"><img src="img/payment/3.png" alt=""></a></li>
+                                                                            <li><a href="#"><img src="img/payment/4.png" alt=""></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- payment-method end -->
+                                                    <button class="submit-btn-1 mt-30 btn-hover-1" type="submit">place order</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- checkout end -->
+                                <!-- order-complete start -->
+                                <div class="tab-pane" id="order-complete">
+                                    <div class="order-complete-content box-shadow">
+                                        <div class="thank-you p-30 text-center">
+                                            <h6 class="text-black-5 mb-0">Thank you. Your order has been received.</h6>
+                                        </div>
+                                        <div class="order-info p-30 mb-10">
+                                            <ul class="order-info-list">
+                                                <li>
+                                                    <h6>order no</h6>
+                                                    <p>m 2653257</p>
+                                                </li>
+                                                <li>
+                                                    <h6>order no</h6>
+                                                    <p>m 2653257</p>
+                                                </li>
+                                                <li>
+                                                    <h6>order no</h6>
+                                                    <p>m 2653257</p>
+                                                </li>
+                                                <li>
+                                                    <h6>order no</h6>
+                                                    <p>m 2653257</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="row">
+                                            <!-- our order -->
+                                            <div class="col-md-6">
+                                                <div class="payment-details p-30">
+                                                    <h6 class="widget-title border-left mb-20">our order</h6>
+                                                    <table>
+                                                        <tr>
+                                                            <td class="td-title-1">Dummy Product Name x 2</td>
+                                                            <td class="td-title-2">$1855.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-title-1">Dummy Product Name</td>
+                                                            <td class="td-title-2">$555.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-title-1">Cart Subtotal</td>
+                                                            <td class="td-title-2">$2410.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-title-1">Shipping and Handing</td>
+                                                            <td class="td-title-2">$15.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-title-1">Vat</td>
+                                                            <td class="td-title-2">$00.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="order-total">Order Total</td>
+                                                            <td class="order-total-price">$2425.00</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>         
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="bill-details p-30">
+                                                    <h6 class="widget-title border-left mb-20">billing details</h6>
+                                                    <ul class="bill-address">
+                                                        <li>
+                                                            <span>Address:</span>
+                                                            28 Green Tower, Street Name, New York City, USA
+                                                        </li>
+                                                        <li>
+                                                            <span>email:</span>
+                                                            info@companyname.com
+                                                        </li>
+                                                        <li>
+                                                            <span>phone : </span>
+                                                            (+880) 19453 821758
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="bill-details pl-30">
+                                                    <h6 class="widget-title border-left mb-20">billing details</h6>
+                                                    <ul class="bill-address">
+                                                        <li>
+                                                            <span>Address:</span>
+                                                            28 Green Tower, Street Name, New York City, USA
+                                                        </li>
+                                                        <li>
+                                                            <span>email:</span>
+                                                            info@companyname.com
+                                                        </li>
+                                                        <li>
+                                                            <span>phone : </span>
+                                                            (+880) 19453 821758
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- order-complete end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SHOP SECTION END -->             
+
+        </div>
+        <!-- End page content -->
+
+        <!-- START FOOTER AREA -->
+        {% include "shop/footer.html" %}  
+    </div>
+    <!-- Body main wrapper end -->
+
+
+    <!-- Placed JS at the end of the document so the pages load faster -->
+
+    <!-- jquery latest version -->
+    <script src="{% static 'shop/js/vendor/jquery-3.1.1.min.js' %}"></script>
+    <!-- Bootstrap framework js -->
+    <script src="{% static 'shop/js/bootstrap.min.js' %}"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="{% static 'shop/js/autocomplete.js' %}"></script>
+    <!-- jquery.nivo.slider js -->
+    <script src="{% static 'shop/lib/js/jquery.nivo.slider.js' %}"></script>
+    <!-- All js plugins included in this file. -->
+    <script src="{% static 'shop/js/plugins.js' %}"></script>
+    <!-- Main js file that contents all jQuery plugins activation. -->
+    <script src="{% static 'shop/js/main.js' %}"></script>
+
+    <script src="{% static 'shop/js/propio.js' %}"></script>
+
+    <script type="text/javascript">
+        
+        activarAutocomplete();
+
+    </script>
+
+</body>
+
+</html>
