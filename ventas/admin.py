@@ -1,12 +1,8 @@
 #-*- coding: utf-8 -*-
 from django.contrib import admin, messages
 from django import forms
-from .models import Estado, MetodoEnvio, MetodoPago, Cliente, Producto, Pedido, ProductoPedido, ComentarioPedido, ComentarioCliente, ComentarioProducto, EtiquetasProducto, Stock, Categoria, Gasto, Proveedor, TipoGasto, ImagenProducto
-    
-class StockInline(admin.TabularInline):
-    model = Stock
-    extra = 0
-
+from .models import Estado, MetodoEnvio, MetodoPago, Cliente, Producto, Pedido, ProductoPedido, ComentarioPedido, ComentarioCliente, ComentarioProducto, EtiquetasProducto, Categoria, Gasto, Proveedor, TipoGasto, ImagenProducto
+        
 class ComentarioProductoInline(admin.TabularInline):
     model = ComentarioProducto
     extra = 0
@@ -34,7 +30,7 @@ class EtiquetasProductoInline(admin.TabularInline):
 class PedidoForm(forms.ModelForm):
     
     class Media:
-       js = ('admin/js/vendor/jquery/jquery.js', 'admin/js/custom_admin_validate.js')
+       js = ('admin/js/vendor/jquery/jquery.js', 'admin/js/custom_admin_validate.js','admin/js/typeahead.js','admin/js/autocomplete.js')
     
 class PedidoAdmin(admin.ModelAdmin):
     list_max_show_all = 1000
@@ -130,25 +126,13 @@ class ProductoAdmin(admin.ModelAdmin):
     list_max_show_all = 1000
     list_per_page = 400
     inlines = [
-        StockInline, ComentarioProductoInline, EtiquetasProductoInline, ImagenProductoInline
+        ComentarioProductoInline, EtiquetasProductoInline, ImagenProductoInline
     ]
     list_display = ('nombre', 'categoria', 'precio_costo', 'precio_venta_distribuidor','precio_venta_publico','stocks','shop','oferta','destacado')
     fieldsets = (
         ('Principal', {
             'classes': ('wide', 'extrapretty'),
             'fields': ('nombre', 'categoria', 'precio_costo', 'precio_venta_distribuidor','precio_venta_publico','stocks','shop','oferta','destacado')
-        }),
-    )
-
-class StockAdmin(admin.ModelAdmin):
-    list_max_show_all = 1000
-    list_per_page = 400
-
-    list_display = ('producto', 'fecha','inicial', 'actual')
-    fieldsets = (
-        ('Principal', {
-            'classes': ('wide', 'extrapretty'),
-            'fields': ('producto','fecha','inicial', 'actual')
         }),
     )
 
@@ -196,6 +180,5 @@ admin.site.register(Categoria, CategoriaAdmin)
 admin.site.register(Pedido, PedidoAdmin)
 admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(Producto, ProductoAdmin)
-admin.site.register(Stock, StockAdmin)  
 admin.site.register(Gasto, GastoAdmin)
 admin.site.register(Proveedor, ProveedorAdmin)
