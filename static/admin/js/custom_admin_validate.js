@@ -30,6 +30,8 @@ $(document).ready(function() {
 
     $(".add-row").click(function(){
 
+
+
         total_total = parseInt($('#id_total').val());
 
         $('select[id^="id_productopedido_set-"]').each(function( index ) {
@@ -37,40 +39,6 @@ $(document).ready(function() {
             var idSelect = $( this ).prop('id')
 
             if ( idSelect.indexOf("prefix") < 0){
-
-                alert(idSelect);
-/////////////////////////////////////////////////////////////////
-                $('#'+idSelect).replaceWith('<input type="text" name="'+idSelect+'" id="'+idSelect+'" class="typeahead" data-provide="typeahead">');
-    
-                var productos = []
-                $.getJSON( "/shop/obtenerProductosJson/", function( data ) {
-                  $.each( data, function( key, val ) {
-                    productos.push({ id: val["pk"] , name: val["fields"]["nombre"]})
-                  });
-
-                  var $input = $('#'+idSelect);
-                        $input.typeahead({
-                        source: productos,
-                        autoSelect: true
-                    });
-                
-                    $input.change(function() {
-                        var current = $input.typeahead("getActive");
-                        if (current) {
-                            // Some item from your model is active!
-                            if (current.name == $input.val()) {
-                                alert(current.name);
-                                //$('<form method="GET" action="/shop/producto"><input type="text" value="'+current.id+'" name="id" /></form>').appendTo('body').submit();
-                            } else {
-                            // This means it is only a partial match, you can either add a new item
-                            // or take the active if you don't want new items
-                            }
-                        } else {
-                            // Nothing is active so it is a new value (or maybe empty value)
-                        }
-                    });
-                });                   
-/////////////////////////////////////////////////////////////////
 
                 $('#' + idSelect ).change(function() {
 

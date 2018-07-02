@@ -7,8 +7,8 @@ from ventas.models import Producto, Categoria
 # Create your views here.
 def index(request):
     categorias          = Categoria.objects.filter(shop=True).order_by('orden')
-    ofertas             = Producto.objects.filter(oferta=True)
-    destacados          = Producto.objects.filter(destacado=True)
+    ofertas             = Producto.objects.filter(oferta=True, shop=True)
+    destacados          = Producto.objects.filter(destacado=True, shop=True)
     changuito           = get_changuito(request)
     chango              = get_chango(request)
     cantProd, totalProd = get_chango_valores_total(changuito)
@@ -34,10 +34,10 @@ def shop(request):
     
     cat_select = request.GET.get('categoria_id','0')
     if cat_select == '0':
-        productos = Producto.objects.all()
+        productos = Producto.objects.filter(shop=True)
         nombre_cat = 'TODAS'
     else:
-        productos = Producto.objects.filter(categoria=cat_select)
+        productos = Producto.objects.filter(categoria=cat_select, shop=True)
         nombre_cat = Categoria.objects.get(id=cat_select).nombre
 
     context = { 'categorias':categorias,
@@ -145,7 +145,7 @@ def emptyCart(request):
     return render(request, 'shop/cart.html', context)
 
 def obtenerProductosJson(request):
-    productos = Producto.objects.all()
+    productos = Producto.objects.filter(shop=True)
     data = serializers.serialize('json', productos)
     return HttpResponse(data, content_type='application/json')
 

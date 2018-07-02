@@ -2,7 +2,7 @@
 from django.contrib import admin, messages
 from django import forms
 from .models import Estado, MetodoEnvio, MetodoPago, Cliente, Producto, Pedido, ProductoPedido, ComentarioPedido, ComentarioCliente, ComentarioProducto, EtiquetasProducto, Categoria, Gasto, Proveedor, TipoGasto, ImagenProducto
-        
+
 class ComentarioProductoInline(admin.TabularInline):
     model = ComentarioProducto
     extra = 0
@@ -30,7 +30,7 @@ class EtiquetasProductoInline(admin.TabularInline):
 class PedidoForm(forms.ModelForm):
     
     class Media:
-       js = ('admin/js/vendor/jquery/jquery.js', 'admin/js/custom_admin_validate.js','admin/js/typeahead.js','admin/js/autocomplete.js')
+       js = ('admin/js/vendor/jquery/jquery.js', 'admin/js/custom_admin_validate.js')
     
 class PedidoAdmin(admin.ModelAdmin):
     list_max_show_all = 1000
@@ -105,6 +105,8 @@ class PedidoAdmin(admin.ModelAdmin):
         
     
 class ClienteAdmin(admin.ModelAdmin):
+    list_max_show_all = 10000
+    list_per_page = 10000
     inlines = [
         ComentarioClienteInline,
     ]
@@ -123,8 +125,8 @@ class ClienteAdmin(admin.ModelAdmin):
     )
     
 class ProductoAdmin(admin.ModelAdmin):
-    list_max_show_all = 1000
-    list_per_page = 400
+    list_max_show_all = 10000
+    list_per_page = 10000
     inlines = [
         ComentarioProductoInline, EtiquetasProductoInline, ImagenProductoInline
     ]
