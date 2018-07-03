@@ -11,6 +11,9 @@ class Categoria(models.Model):
     orden  = models.IntegerField('Orden', default=0)
     shop   = models.BooleanField('Shop', default=False)
     
+    def __unicode__(self):
+        return u'%s' % self.nombre
+        
     def __str__(self):
         return self.nombre
 
@@ -20,6 +23,9 @@ class Categoria(models.Model):
 class Estado(models.Model):
     nombre = models.CharField('Nombre', max_length=250)
     
+    def __unicode__(self):
+        return u'%s' % self.nombre
+        
     def __str__(self):
         return self.nombre
 
@@ -29,6 +35,9 @@ class Estado(models.Model):
 class MetodoEnvio(models.Model):
     metodo_envio = models.CharField('Metodo envio', max_length=150)
     
+    def __unicode__(self):
+        return u'%s' % self.metodo_envio
+        
     def __str__(self):
         return self.metodo_envio
 
@@ -38,6 +47,9 @@ class MetodoEnvio(models.Model):
 class MetodoPago(models.Model):
     metodo_pago = models.CharField('Metodo pago', max_length=20)
     
+    def __unicode__(self):
+        return u'%s' % self.metodo_pago
+        
     def __str__(self):
         return self.metodo_pago
 
@@ -47,6 +59,9 @@ class MetodoPago(models.Model):
 class TipoGasto(models.Model):
     tipo_gasto = models.CharField('Tipo de Gasto', max_length=30)
     
+    def __unicode__(self):
+        return u'%s' % self.tipo_gasto
+        
     def __str__(self):
         return self.tipo_gasto
 
@@ -62,6 +77,9 @@ class Cliente(models.Model):
     direccion = models.CharField('Direccion', max_length=200, null=True, blank=True)
     fecha = models.DateTimeField('Fecha entrada',default=datetime.datetime.now)
     
+    def __unicode__(self):
+        return u'%s' % self.cliente
+        
     def __str__(self):
         return self.cliente + " (" + str(self.id) + ")"
 
@@ -78,6 +96,9 @@ class Proveedor(models.Model):
     direccion = models.CharField('Direccion', max_length=200, null=True, blank=True)
     fecha = models.DateTimeField('Fecha entrada',default=datetime.datetime.now)
     
+    def __unicode__(self):
+        return u'%s' % self.proveedor
+        
     def __str__(self):
         return self.proveedor
 
@@ -144,6 +165,9 @@ class EtiquetasProducto(models.Model):
     nombre = models.CharField('Nombre', max_length=250)
     comentario = models.TextField('Comentario', null=True, blank=True)
 
+    def __unicode__(self):
+        return u'%s' % self.comentario
+        
 class Gasto(models.Model):
     fecha = models.DateTimeField('Fecha gasto',default=datetime.datetime.now)
     autorizado = models.ForeignKey(User)
@@ -226,6 +250,9 @@ class ComentarioPedido(models.Model):
     fecha = models.DateTimeField('Fecha',default=datetime.datetime.now)
     principal = models.BooleanField('Principal', default=False)
 
+    def __unicode__(self):
+        return u'%s' % self.comentario
+        
     def __str__(self):
         return self.comentario
 
@@ -237,6 +264,9 @@ class ComentarioCliente(models.Model):
     cliente = models.ForeignKey(Cliente)
     fecha = models.DateTimeField('Fecha',default=datetime.datetime.now)
     
+    def __unicode__(self):
+        return u'%s' % self.comentario
+        
     def __str__(self):
         return self.comentario
 
@@ -248,6 +278,9 @@ class ComentarioProducto(models.Model):
     producto = models.ForeignKey(Producto)
     fecha = models.DateTimeField('Fecha',default=datetime.datetime.now)
     
+    def __unicode__(self):
+        return u'%s' % self.comentario
+        
     def __str__(self):
         return self.comentario
 
@@ -259,6 +292,9 @@ class ImagenProducto(models.Model):
     producto = models.ForeignKey(Producto)
     principal = models.BooleanField('Principal', default=False)
 
+    def __unicode__(self):
+        return u'%s' % self.producto.nombre
+        
     def __str__(self):
         return self.producto.nombre
 
@@ -270,7 +306,10 @@ class Stock(models.Model):
     fecha = models.DateTimeField('Fecha',default=datetime.datetime.now)
     inicial = models.IntegerField('Inicial',default=0)
     actual = models.IntegerField('Actual',default=0)
-
+    
+    def __unicode__(self):
+        return u'%s' % self.producto.nombre
+        
     def __str__(self):
         return self.producto.nombre
 
