@@ -57,7 +57,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['C:/Users/Jeremias/Documents/imperio/templates'],
+        'DIRS': ['D:/freelos/imperio/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +125,7 @@ import os
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    'C:/Users/Jeremias/Documents/imperio/static',
+    'D:/freelos/imperio/static',
 ]
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
