@@ -423,6 +423,11 @@ def get_item(dictionary, key):
 def get_item_aux(dictionary, key):
     return dictionary.get(str(key))
 
+@register.filter
+def get_item_bis(dictionary, key):
+    return dictionary.get(str(key))
+
+
 
 @register.filter
 def get_comentario_producto(comentario, id):

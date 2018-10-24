@@ -38,7 +38,7 @@
                                     </div> 
                                 </td-->
                                 <td class="product-quantity">
-                                    <input type="text" maxlength="4" disabled style="font-size: 21px; width: 45px;margin-bottom: 0px;padding-left: 0px;" value="{{ changuito|get_item:prod.id }}" name="qtybutton{{ prod.id }}">
+                                    <input type="text" maxlength="4" disabled style="font-size: 21px; width: 45px;margin-bottom: 0px;padding-left: 0px;" value="{{ changuito|get_item_bis:prod.id }}" name="qtybutton{{ prod.id }}">
                                 </td>
                                 {% with cantidad=changuito|get_item_aux:prod.id %}  
                                 <td class="product-subtotal">${{ prod.getPrecioWeb|multiply:cantidad }}</td>
