@@ -1,7 +1,8 @@
 #-*- coding: utf-8 -*-
 from django.contrib import admin, messages
 from django import forms
-from .models import Estado, MetodoEnvio, MetodoPago, Cliente, Producto, Pedido, ProductoPedido, ComentarioPedido, ComentarioCliente, ComentarioProducto, EtiquetasProducto, Categoria, Gasto, Proveedor, TipoGasto, ImagenProducto
+from .models import Estado, MetodoEnvio, MetodoPago, Cliente, Producto, Pedido, ProductoPedido, ComentarioPedido, ComentarioCliente, ComentarioProducto, EtiquetasProducto, Categoria, Gasto, Proveedor, TipoGasto, ImagenProducto, PuntoVenta
+from django.contrib.sessions.models import Session
 
 class ComentarioProductoInline(admin.TabularInline):
     model = ComentarioProducto
@@ -49,13 +50,17 @@ class PedidoAdmin(admin.ModelAdmin):
         }),
 
         ('Logistica', {
-            'fields': ['metodo_pago', 'metodo_envio', 'armado', 'emitido']
+            'fields': ['metodo_pago', 'metodo_envio', 'armado', 'emitido','punto_venta']
         }),
         ('Estado y Total', {
             'fields': ['estado', 'total']
         }),
+        ('MP', {
+            'classes': ('collapse',),
+            'fields': ['collection_id', 'preference_id']
+        }),
     )
-    list_display =  ('orden_de_venta', 'fecha', 'total','cliente','metodo_pago','metodo_envio', 'estado','button')
+    list_display =  ('orden_de_venta', 'fecha', 'total','cliente','punto_venta','metodo_pago','metodo_envio', 'estado','button','collection_id', 'preference_id')
     
     def save_model(self, request, obj, form, change):
 
@@ -110,14 +115,14 @@ class ClienteAdmin(admin.ModelAdmin):
     inlines = [
         ComentarioClienteInline,
     ]
-    list_display = ('id', 'cliente', 'contacto', 'telefono', 'celular','email', 'direccion', 'fecha')
+    list_display = ('id', 'cliente', 'numeroSocio', 'contacto', 'telefono', 'celular','email', 'direccion', 'fecha')
     fieldsets = (
         ('Principal', {
             'classes': ('wide', 'extrapretty'),
             'fields': ['cliente', 'contacto']
         }),
         ('Cliente', {
-            'fields': ['telefono', 'celular', 'email', 'direccion']
+            'fields': ['numeroSocio', 'telefono', 'celular', 'email', 'direccion']
         }),
         ('Fecha de entrada', {
             'fields': ['fecha'] 
@@ -174,6 +179,14 @@ class CategoriaAdmin(admin.ModelAdmin):
         }),
     )
 
+class SessionAdmin(admin.ModelAdmin):
+    def _session_data(self, obj):
+        return obj.get_decoded()
+    list_display = ['session_key', '_session_data', 'expire_date']
+
+admin.site.register(Session, SessionAdmin)
+
+admin.site.register(PuntoVenta)
 admin.site.register(TipoGasto)
 admin.site.register(Estado)
 admin.site.register(MetodoEnvio)

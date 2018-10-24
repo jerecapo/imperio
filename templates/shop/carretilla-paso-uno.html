@@ -1,0 +1,261 @@
+{% load static %}
+<!-- Tab panes -->
+<div class="tab-content">
+    <!-- shopping-cart start -->
+    <div class="tab-pane active" id="shopping-cart">
+        <div class="shopping-cart-content">
+            <form action="#">
+                <div class="table-content table-responsive mb-50"  >
+                    <table class="text-center">
+                        <thead>
+                            <tr>
+                                <th class="product-thumbnail">Producto</th>
+                                <th class="product-price">Precio</th>
+                                <th class="product-quantity">Cantidad</th>
+                                <th class="product-subtotal">Total</th>
+                                <th class="product-remove">Quitar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- tr -->
+                            {% for prod in chango %}
+
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <div class="pro-thumbnail-img">
+                                        <img style="width: 75px;" src="{{ prod.dameFotoChango }}" alt="{{ prod.nombre }}">
+                                    </div>
+                                    <div class="pro-thumbnail-info text-left">
+                                        <h6 class="product-title-2">
+                                            <a href="#">{{ prod.nombre }}</a>
+                                        </h6>
+                                    </div>
+                                </td>
+                                <td class="product-price">${{ prod.getPrecioWeb }}</td>
+                                <!--td class="product-quantity">
+                                    <div class="cart-plus-minus f-left">
+                                        <input type="text" value="{{ changuito|get_item:prod.id }}" name="qtybutton" class="cart-plus-minus-box">
+                                    </div> 
+                                </td-->
+                                <td class="product-quantity">
+                                    <input type="text" maxlength="4" disabled style="font-size: 21px; width: 45px;margin-bottom: 0px;padding-left: 0px;" value="{{ changuito|get_item:prod.id }}" name="qtybutton{{ prod.id }}">
+                                </td>
+                                {% with cantidad=changuito|get_item_aux:prod.id %}  
+                                <td class="product-subtotal">${{ prod.getPrecioWeb|multiply:cantidad }}</td>
+                                {% endwith %}
+                                <td class="product-remove" onclick="lessProductCart({{ prod.id }});">
+                                    <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <!--div class="col-md-6">
+                        <div class="coupon-discount box-shadow p-30 mb-50">
+                            <h6 class="widget-title border-left mb-20">coupon discount</h6>
+                            <p>Enter your coupon code if you have one!</p>
+                            <input type="text" name="name" placeholder="Enter your code here.">
+                            <button class="submit-btn-1 black-bg btn-hover-2" type="submit">apply coupon</button>
+                        </div>
+                    </div
+                    precio distribucion sacar
+                    numero de cliente autonumerado
+                    reporte deuda clientes y proveedores-->
+                    <div class="col-md-6">
+                        <h6 class="widget-title border-left mb-20">Datos personales</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="nombre">Nombre (*)</label>
+                                <input type="text" name="nombre" id="nombre" value="Jeremias">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="apellido">Apellido (*)</label>
+                                <input type="text" name="apellido" id="apellido" value="Cuta">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Mail">Mail(*)</label>
+                                <input type="text" name="mail" id="mail" value="jerecapo@gmail.com">
+                            </div>
+                            <!--div class="col-md-6">
+                                <label for="numeroSocio">Numero Socio</label>
+                                <input type="text" name="numeroSocio" id="numeroSocio">
+                            </div-->
+                            <div class="col-md-6">
+                                <label for="telefono">Telefono (*)</label>
+                                <input type="text" name="telefono" id="telefono" value="1523435678">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="domicilio">Domicilio</label>
+                                <input type="text" name="domicilio" id="domicilio">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="comentarios">Comentarios</label>
+                                <textarea class="custom-textarea" name="comentarios" id="comentarios"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="comentarios">(*) ESTOS CAMPOS SON OBLIGATORIOS.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="payment-details box-shadow p-30 mb-50">
+                            <h6 class="widget-title border-left mb-20">Detalle del pago</h6>
+                            <table>
+                                <tr>
+                                    <td class="td-title-1">Carretilla SubTotal</td>
+                                    <td class="td-title-2">${{ totalProd }}</td>
+                                </tr>
+                                <!--tr>
+                                    <td class="td-title-1">Pago Con Tarjeta (11%)</td>
+                                    <td class="td-title-2">${{ adicTarjeta }}</td>
+                                </tr-->
+                                <tr>
+                                    <td class="order-total">Total</td>
+                                    <td class="order-total-price">${{ totalProd }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <button onclick="crearVenta();" class="submit-btn-1 btn-hover-1" style="width: 200px; height: 60px; " type="button">FINALIZAR COMPRA</button>
+                    </div>
+                </div>
+                <!--div class="row">
+                    <div class="col-md-12">
+                        <div class="culculate-shipping box-shadow p-30">
+                            <h6 class="widget-title border-left mb-20">culculate shipping</h6>
+                            <p>Enter your coupon code if you have one!</p>
+                            <div class="row">
+                                <div class="col-sm-4 col-xs-12">
+                                    <input type="text"  placeholder="Country">
+                                </div>
+                                <div class="col-sm-4 col-xs-12">
+                                    <input type="text"  placeholder="Region / State">
+                                </div>
+                                <div class="col-sm-4 col-xs-12">
+                                    <input type="text"  placeholder="Post code">
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="submit-btn-1 black-bg btn-hover-2">get a quote</button>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div-->
+            </form>
+        </div>
+    </div>
+    <!-- shopping-cart end -->
+    <!-- checkout start -->
+    <div class="tab-pane" id="checkout">
+        <div class="checkout-content box-shadow p-30">
+            <form action="#" id="formPasoDos" >
+                <div class="row">
+                    <!-- billing details -->
+                    
+                    
+                    <div class="col-md-6">
+                        <!-- our order -->
+                        <div class="payment-details pl-10 mb-50">
+                            <h6 class="widget-title border-left mb-20">Tu pedido</h6>
+                            <table>
+                                {% for prod in chango %}
+                                    <tr>
+                                        <td class="td-title-1">{{ prod.nombre }} x {{ changuito|get_item:prod.id }}</td>
+                                        <td class="td-title-2">${{ prod.getPrecioWeb }}</td>
+                                    </tr
+                                {% endfor %}
+                                <tr>
+                                    <td class="order-total">TOTAL</td>
+                                    <td class="order-total-price"> ${{ totalProd }} </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">{{botonMP|safe}}</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- checkout end -->
+    <!-- order-complete start -->
+    <div class="tab-pane" id="order-complete">
+        <div class="order-complete-content box-shadow">
+            <div class="thank-you p-30 text-center">
+                <h6 class="text-black-5 mb-0">GRACIAS POR TU COMPRA! YA RECIBIMOS TU PEDIDO.</h6>
+            </div>
+            <div class="order-info p-30 mb-10">
+                <ul class="order-info-list">
+                    <li>
+                        <h6>order no</h6>
+                        <p>m 2653257</p>
+                    </li>
+                    <li>
+                        <h6>order no</h6>
+                        <p>m 2653257</p>
+                    </li>
+                    <li>
+                        <h6>order no</h6>
+                        <p>m 2653257</p>
+                    </li>
+                    <li>
+                        <h6>order no</h6>
+                        <p>m 2653257</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <!-- our order -->
+                <div class="col-md-6">
+                    <div class="payment-details p-30">
+                        <h6 class="widget-title border-left mb-20">Tu pedido</h6>
+                        <table>
+                            {% for prod in chango %}
+                                <tr>
+                                    <td class="td-title-1">{{ prod.nombre }} x {{ changuito|get_item:prod.id }}</td>
+                                    <td class="td-title-2">${{ prod.getPrecioWeb }}</td>
+                                </tr
+                            {% endfor %}
+                            <tr>
+                                <td class="order-total">Order Total</td>
+                                <td class="order-total-price">${{ totalProd }}</td>
+                            </tr>
+                        </table>
+                    </div>         
+                </div>
+                <div class="col-md-6">
+                    <div class="bill-details p-30">
+                        <h6 class="widget-title border-left mb-20">DETALLES FACTURACION</h6>
+                        <ul class="bill-address">
+                            <li>
+                                <span>Direccion:</span>
+                                28 Green Tower, Street Name, New York City, USA
+                            </li>
+                            <li>
+                                <span>Email:</span>
+                                info@companyname.com
+                            </li>
+                            <li>
+                                <span>Telefono : </span>
+                                (+880) 19453 821758
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- order-complete end -->
+</div>

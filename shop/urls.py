@@ -22,7 +22,16 @@ urlpatterns = [
     url(r'^addProductCart/', 'shop.views.addProductCart', name='addProductCart'),
     url(r'^lessProductCart/', 'shop.views.lessProductCart', name='lessProductCart'),
     
+    url(r'^crearVenta/', 'shop.views.crearVenta', name='crearVenta'),
+
     url(r'^carretilla/', 'shop.views.carretilla', name='carretilla'),
+    url(r'^regarcaPasoUno/', 'shop.views.regarcaPasoUno', name='regarcaPasoUno'),
+    url(r'^compra_completa/', 'shop.views.compra_completa', name='compra_completa'),
+
+    url(r'^poner_punto_venta/', 'shop.views.poner_punto_venta', name='poner_punto_venta'),
+    url(r'^poner_numero_socio/', 'shop.views.poner_numero_socio', name='poner_numero_socio'),
+    url(r'^validarNumeroSocio/', 'shop.views.validarNumeroSocio', name='validarNumeroSocio'),
+
     url(r'^shop/', 'shop.views.shop', name='shop'),
     url(r'^producto/', 'shop.views.producto', name='producto'),
     url(r'^$', 'shop.views.index', name='index'),

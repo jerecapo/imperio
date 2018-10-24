@@ -35,8 +35,19 @@ function addProductCart(id){
 function lessProductCart(id){
     $.post( "/shop/lessProductCart/", { id_prod_less: id } , function( data ) {
         $("#changuito").html( data );
+    }).done(function() {
+        if (window.location.pathname.includes("carretilla")){
+            if ($("#totalProd").val() == "0"){
+                window.location = "/shop/shop";
+            }else{
+                $.post( "/shop/regarcaPasoUno/", function( data ) {
+                    $("#tab-pane-carretilla").html( data );
+                });
+            }
+        }
     });
 }
+
 function emptyCart(id){
     $.post( "/shop/emptyCart/" , function( data ) {
         $("#changuito").html( data );
@@ -46,6 +57,7 @@ function traer_prod_categoria(id_cat){
     $("#id_categoria").val(id_cat);
     $("#form_prod_categoria").submit();
 }
+
 $.ajaxSetup({ 
      beforeSend: function(xhr, settings) {
          function getCookie(name) {

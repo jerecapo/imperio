@@ -67,7 +67,19 @@ class TipoGasto(models.Model):
 
     class Meta:
         verbose_name_plural = "Tipos de gasto" 
+
+class PuntoVenta(models.Model):
+    punto_venta = models.CharField('Punto de Venta', max_length=50)
+    
+    def __unicode__(self):
+        return u'%s' % self.punto_venta
         
+    def __str__(self):
+        return self.punto_venta
+
+    class Meta:
+        verbose_name_plural = "Puntos de Venta"   
+
 class Cliente(models.Model):
     cliente = models.CharField('Cliente', max_length=100)
     contacto = models.CharField('Contacto', max_length=100)
@@ -76,7 +88,7 @@ class Cliente(models.Model):
     email = models.CharField('Email', max_length=100, null=True, blank=True)
     direccion = models.CharField('Direccion', max_length=200, null=True, blank=True)
     fecha = models.DateTimeField('Fecha entrada',default=datetime.datetime.now)
-    
+    numeroSocio = models.CharField('Numero Socio', max_length=5, null=True, blank=True)
     def __unicode__(self):
         return u'%s' % self.cliente
         
@@ -86,6 +98,25 @@ class Cliente(models.Model):
     class Meta:
         verbose_name_plural = "Clientes" 
         ordering = ('cliente',)
+
+    def getNextNumeroSocio(self):
+        try:
+            pedidoUno = Cliente.objects.order_by('-numeroSocio')[0].numeroSocio
+            nuevoNumero = str(int(pedidoUno)+1)
+            cerosCantidad = 5 - len(nuevoNumero)
+            ceros = '0' * cerosCantidad
+            pedido = ceros + nuevoNumero
+        except:
+            pedido = '00001'
+
+        return pedido
+
+    def save(self, *args, **kwargs):
+        if self.numeroSocio:
+            pass
+        else:
+            self.numeroSocio = self.getNextNumeroSocio()
+        super(Cliente, self).save(*args, **kwargs)
 
 class Proveedor(models.Model):
     proveedor = models.CharField('Proveedor', max_length=100)
@@ -154,6 +185,8 @@ class Producto(models.Model):
     def dameFotosShop(self):
         return self.imagenproducto_set.all().order_by('-principal')
         
+    def getPrecioWeb(self):
+        return self.precio_venta_publico * 1.10
 
     class Meta:
         verbose_name_plural = "Productos" 
@@ -199,6 +232,9 @@ class Pedido(models.Model):
     emitido = models.ForeignKey(User, null=True, blank=True, related_name='emitido_por')
     estado = models.ForeignKey(Estado)
     total = models.FloatField('Total',default=0)
+    punto_venta = models.ForeignKey(PuntoVenta, null=True, blank=True)
+    collection_id = models.CharField('collection_id', max_length=100, null=True, blank=True)
+    preference_id = models.CharField('preference_id', max_length=100, null=True, blank=True)
 
     def button(self):
         return mark_safe('<a href="/imprimir?pedido_id=%s" target="_blank">Imprimir</a>' %self.id)
@@ -214,13 +250,32 @@ class Pedido(models.Model):
         return pedido.orden_de_venta
 
     def save(self, *args, **kwargs):
-        total = 0
-        for pp in self.productopedido_set.all():
-            total = total + pp.total
-            
-        self.total = total
+        punto_venta = self.punto_venta.punto_venta
+        if punto_venta == 'WEB':
+            print "Es WEB"
+        else:
+            print "No es WEB"
+            self.punto_venta = PuntoVenta.objects.get(punto_venta="Urquiza")
+            total = 0
+            for pp in self.productopedido_set.all():
+                total = total + pp.total
+                
+            self.total = total
 
         super(Pedido, self).save(*args, **kwargs)
+
+    def get_next_orden_venta(self):
+        try:
+            pedidoUno = Pedido.objects.order_by('-orden_de_venta')[0].orden_de_venta
+            pedido = pedidoUno.split('-')[1]
+            nuevoNumero = str(int(pedido)+1)
+            cerosCantidad = 7 - len(nuevoNumero)
+            ceros = '0' * cerosCantidad
+            pedido = pedidoUno.split('-')[0] + '-' + ceros + nuevoNumero
+        except:
+            pedido = '0001-0000001'
+
+        return {'orden_de_venta': pedido}
 
     class Meta:
         verbose_name_plural = "Ventas del dia" 

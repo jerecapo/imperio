@@ -1,4 +1,5 @@
 {% load static %}
+    <input type="hidden" value="{{ totalProd }}" id="totalProd" >
     <div class="total-cart-in" >
         <div class="cart-toggler" style="margin-top: 15px;" >
             <a href="#" style="font-size:20px;">
@@ -31,11 +32,26 @@
                                 <a href="#">{{ prod.nombre }}</a>
                             </h6>
                             <p style="max-width: 100px;">
-                                ${{ prod.precio_venta_publico }} x {{ changuito|get_item:prod.id }}
+                                ${{ prod.getPrecioWeb }} x {{ changuito|get_item_aux:prod.id }}
                             </p>
                         </div>
                     </div>
                     {% endfor %}
+                </div>
+            </li>
+            <li>
+                <div class="top-cart-inner subtotal">
+                    <h4 class="text-uppercase g-font-2">
+                        Total  =  
+                        <span>$ {{ totalProd }}</span>
+                    </h4>
+                </div>
+            </li>
+            <li>
+                <div class="top-cart-inner check-out">
+                    <h4 class="text-uppercase">
+                        <a href="/shop/carretilla">Pagar</a>
+                    </h4>
                 </div>
             </li>
             {% else %}
@@ -47,27 +63,6 @@
                 </div>
             </li>
             {% endif %}
-            <li>
-                <div class="top-cart-inner subtotal">
-                    <h4 class="text-uppercase g-font-2">
-                        Total  =  
-                        <span>$ {{ totalProd }}</span>
-                    </h4>
-                </div>
-            </li>
-            <li>
-                <div class="top-cart-inner view-cart">
-                    <h4 class="text-uppercase">
-                        <a href="/shop/carretilla">Ver Carretilla</a>
-                    </h4>
-                </div>
-            </li>
-            <li>
-                <div class="top-cart-inner check-out">
-                    <h4 class="text-uppercase">
-                        <a href="#">Pagar</a>
-                    </h4>
-                </div>
-            </li>
+            
         </ul>
     </div>

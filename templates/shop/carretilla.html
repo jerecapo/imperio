@@ -7,8 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>ImperioShop</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'shop/img/imgAlan/favicon 32x32.png' %}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -57,7 +56,7 @@
                             <!-- logo -->
                             <div class="col-md-2 col-sm-6 col-xs-12">
                                 <div class="logo">
-                                    <a href="index.html">
+                                    <a href="/">
                                         <img width="120" style="margin-top: 7px;"src="{% static 'shop/img/imgAlan/full-logo-header.png' %}" alt="main logo">
                                     </a>
                                 </div>
@@ -154,19 +153,19 @@
                     <div class="row">
                         <div class="col-md-2 col-sm-12">
                             <ul class="cart-tab">
-                                <li>
+                                <li id="li-cart">
                                     <a class="active" href="#shopping-cart" data-toggle="tab">
                                         <span>01</span>
                                         Carretilla
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#checkout" data-toggle="tab">
+                                <li id="li-checkout" style="display: none;">
+                                    <a id="tab-checkout" href="#checkout" data-toggle="tab">
                                         <span>02</span>
                                         Pagar
                                     </a>
                                 </li>
-                                <li>
+                                <li id="li-complete" style="display: none;">
                                     <a href="#order-complete" data-toggle="tab">
                                         <span>03</span>
                                         Fin
@@ -176,12 +175,12 @@
                         </div>
                         <div class="col-md-10 col-sm-12">
                             <!-- Tab panes -->
-                            <div class="tab-content">
+                            <div class="tab-content" id="d" >
                                 <!-- shopping-cart start -->
                                 <div class="tab-pane active" id="shopping-cart">
                                     <div class="shopping-cart-content">
-                                        <form action="#">
-                                            <div class="table-content table-responsive mb-50">
+                                        <form action="#" id="formPasoDos">
+                                            <div class="table-content table-responsive mb-50"  >
                                                 <table class="text-center">
                                                     <thead>
                                                         <tr>
@@ -207,19 +206,19 @@
                                                                     </h6>
                                                                 </div>
                                                             </td>
-                                                            <td class="product-price">${{ prod.precio_venta_publico }}</td>
+                                                            <td class="product-price">${{ prod.getPrecioWeb }}</td>
                                                             <!--td class="product-quantity">
                                                                 <div class="cart-plus-minus f-left">
                                                                     <input type="text" value="{{ changuito|get_item:prod.id }}" name="qtybutton" class="cart-plus-minus-box">
                                                                 </div> 
                                                             </td-->
                                                             <td class="product-quantity">
-                                                                <input type="text" maxlength="4" style="font-size: 21px; width: 45px;margin-bottom: 0px;padding-left: 0px;" value="{{ changuito|get_item:prod.id }}" name="qtybutton{{ prod.id }}">
+                                                                <input type="text" maxlength="4" disabled style="font-size: 21px; width: 45px;margin-bottom: 0px;padding-left: 0px;" value="{{ changuito|get_item:prod.id }}" name="qtybutton{{ prod.id }}">
                                                             </td>
-                                                            {% with cantidad=changuito|get_item:prod.id %}  
-                                                            <td class="product-subtotal">${{ prod.precio_venta_publico|multiply:cantidad }}</td>
+                                                            {% with cantidad=changuito|get_item_aux:prod.id %}  
+                                                            <td class="product-subtotal">${{ prod.getPrecioWeb|multiply:cantidad }}</td>
                                                             {% endwith %}
-                                                            <td class="product-remove">
+                                                            <td class="product-remove" onclick="carretillaLessProductCart({{ prod.id }});">
                                                                 <a href="#"><i class="zmdi zmdi-close"></i></a>
                                                             </td>
                                                         </tr>
@@ -239,7 +238,56 @@
                                                         <input type="text" name="name" placeholder="Enter your code here.">
                                                         <button class="submit-btn-1 black-bg btn-hover-2" type="submit">apply coupon</button>
                                                     </div>
-                                                </div-->
+                                                </div
+                                                precio distribucion sacar
+                                                numero de cliente autonumerado
+                                                reporte deuda clientes y proveedores-->
+                                                <div class="col-md-6">
+                                                    <h6 class="widget-title border-left mb-20">Datos personales</h6>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="numeroSocio">Numero Socio (*SOLO SI TENES)</label>
+                                                            <input type="text" maxlength="5" name="numeroSocio" id="numeroSocio" onchange="validarNumeroSocio();">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="contacto">Nombre y Apellido(*)</label>
+                                                            <input type="text" name="contacto" id="contacto" >
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label for="Mail">Mail(*)</label>
+                                                            <input type="text" name="mail" id="mail" >
+                                                        </div>
+                                                        <!--div class="col-md-6">
+                                                            <label for="numeroSocio">Numero Socio</label>
+                                                            <input type="text" name="numeroSocio" id="numeroSocio">
+                                                        </div-->
+                                                        <div class="col-md-6">
+                                                            <label for="telefono">Telefono (*)</label>
+                                                            <input type="text" name="telefono" id="telefono" >
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="domicilio">Domicilio</label>
+                                                            <input type="text" name="domicilio" id="domicilio">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="comentarios">Comentarios</label>
+                                                            <textarea class="custom-textarea" name="comentarios" id="comentarios"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="comentarios">(*) ESTOS CAMPOS SON OBLIGATORIOS.</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="payment-details box-shadow p-30 mb-50">
                                                         <h6 class="widget-title border-left mb-20">Detalle del pago</h6>
@@ -248,16 +296,17 @@
                                                                 <td class="td-title-1">Carretilla SubTotal</td>
                                                                 <td class="td-title-2">${{ totalProd }}</td>
                                                             </tr>
-                                                            <tr>
+                                                            <!--tr>
                                                                 <td class="td-title-1">Pago Con Tarjeta (11%)</td>
                                                                 <td class="td-title-2">${{ adicTarjeta }}</td>
-                                                            </tr>
+                                                            </tr-->
                                                             <tr>
                                                                 <td class="order-total">Total</td>
-                                                                <td class="order-total-price">${{ totalConTarjeta }}</td>
+                                                                <td class="order-total-price">${{ totalProd }}</td>
                                                             </tr>
                                                         </table>
                                                     </div>
+                                                    <button onclick="crearVenta();" class="submit-btn-1 btn-hover-1" style="width: 200px; height: 60px; " type="button">FINALIZAR COMPRA</button>
                                                 </div>
                                             </div>
                                             <!--div class="row">
@@ -286,226 +335,33 @@
                                     </div>
                                 </div>
                                 <!-- shopping-cart end -->
-                                <!-- wishlist start -->
-                                <div class="tab-pane" id="wishlist">
-                                    <div class="wishlist-content">
-                                        <form action="#">
-                                            <div class="table-content table-responsive mb-50">
-                                                <table class="text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="product-thumbnail">product</th>
-                                                            <th class="product-price">price</th>
-                                                            <th class="product-stock">Stock status</th>
-                                                            <th class="product-add-cart">add to cart</th>
-                                                            <th class="product-remove">remove</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <!-- tr -->
-                                                        <tr>
-                                                            <td class="product-thumbnail">
-                                                                <div class="pro-thumbnail-img">
-                                                                    <img src="img/cart/1.jpg" alt="">
-                                                                </div>
-                                                                <div class="pro-thumbnail-info text-left">
-                                                                    <h6 class="product-title-2">
-                                                                        <a href="#">dummy product name</a>
-                                                                    </h6>
-                                                                    <p>Brand: Brand Name</p>
-                                                                    <p>Model: Grand s2</p>
-                                                                    <p> Color: Black, White</p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="product-price">$560.00</td>
-                                                            <td class="product-stock text-uppercase">in stoct</td>
-                                                            <td class="product-add-cart">
-                                                                <a href="#" title="Add To Cart">
-                                                                    <i class="zmdi zmdi-shopping-cart-plus"></i>
-                                                                </a>
-                                                            </td>
-                                                            <td class="product-remove">
-                                                                <a href="#"><i class="zmdi zmdi-close"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- tr -->
-                                                        <tr>
-                                                            <td class="product-thumbnail">
-                                                                <div class="pro-thumbnail-img">
-                                                                    <img src="img/cart/2.jpg" alt="">
-                                                                </div>
-                                                                <div class="pro-thumbnail-info text-left">
-                                                                    <h6 class="product-title-2">
-                                                                        <a href="#">dummy product name</a>
-                                                                    </h6>
-                                                                    <p>Brand: Brand Name</p>
-                                                                    <p>Model: Grand s2</p>
-                                                                    <p> Color: Black, White</p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="product-price">$560.00</td>
-                                                            <td class="product-stock text-uppercase">in stoct</td>
-                                                            <td class="product-add-cart">
-                                                                <a href="#" title="Add To Cart">
-                                                                    <i class="zmdi zmdi-shopping-cart-plus"></i>
-                                                                </a>
-                                                            </td>
-                                                            <td class="product-remove">
-                                                                <a href="#"><i class="zmdi zmdi-close"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- tr -->
-                                                        <tr>
-                                                            <td class="product-thumbnail">
-                                                                <div class="pro-thumbnail-img">
-                                                                    <img src="img/cart/3.jpg" alt="">
-                                                                </div>
-                                                                <div class="pro-thumbnail-info text-left">
-                                                                    <h6 class="product-title-2">
-                                                                        <a href="#">dummy product name</a>
-                                                                    </h6>
-                                                                    <p>Brand: Brand Name</p>
-                                                                    <p>Model: Grand s2</p>
-                                                                    <p> Color: Black, White</p>
-                                                                </div>
-                                                            </td>
-                                                            <td class="product-price">$560.00</td>
-                                                            <td class="product-stock text-uppercase">in stoct</td>
-                                                            <td class="product-add-cart">
-                                                                <a href="#" title="Add To Cart">
-                                                                    <i class="zmdi zmdi-shopping-cart-plus"></i>
-                                                                </a>
-                                                            </td>
-                                                            <td class="product-remove">
-                                                                <a href="#"><i class="zmdi zmdi-close"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- wishlist end -->
                                 <!-- checkout start -->
                                 <div class="tab-pane" id="checkout">
                                     <div class="checkout-content box-shadow p-30">
-                                        <form action="#">
+                                        <form action="#" >
                                             <div class="row">
                                                 <!-- billing details -->
-                                                <div class="col-md-6">
-                                                    <div class="billing-details pr-10">
-                                                        <h6 class="widget-title border-left mb-20">billing details</h6>
-                                                        <input type="text"  placeholder="Your Name Here...">
-                                                        <input type="text"  placeholder="Email address here...">
-                                                        <input type="text"  placeholder="Phone here...">
-                                                        <input type="text"  placeholder="Company neme here...">
-                                                        <select class="custom-select">
-                                                            <option value="defalt">country</option>
-                                                            <option value="c-1">Australia</option>
-                                                            <option value="c-2">Bangladesh</option>
-                                                            <option value="c-3">Unitd States</option>
-                                                            <option value="c-4">Unitd Kingdom</option>
-                                                        </select>
-                                                        <select class="custom-select">
-                                                            <option value="defalt">State</option>
-                                                            <option value="c-1">Melbourne</option>
-                                                            <option value="c-2">Dhaka</option>
-                                                            <option value="c-3">New York</option>
-                                                            <option value="c-4">London</option>
-                                                        </select>
-                                                        <select class="custom-select">
-                                                            <option value="defalt">Town/City</option>
-                                                            <option value="c-1">Victoria</option>
-                                                            <option value="c-2">Chittagong</option>
-                                                            <option value="c-3">Boston</option>
-                                                            <option value="c-4">Cambridge</option>
-                                                        </select>
-                                                        <textarea class="custom-textarea" placeholder="Your address here..."></textarea>
-                                                    </div>
-                                                </div>
+                                                
+                                                
                                                 <div class="col-md-6">
                                                     <!-- our order -->
                                                     <div class="payment-details pl-10 mb-50">
-                                                        <h6 class="widget-title border-left mb-20">our order</h6>
+                                                        <h6 class="widget-title border-left mb-20">Tu pedido</h6>
                                                         <table>
+                                                            {% for prod in chango %}
+                                                                <tr>
+                                                                    <td class="td-title-1">{{ prod.nombre }} x {{ changuito|get_item:prod.id }}</td>
+                                                                    <td class="td-title-2">${{ prod.getPrecioWeb }}</td>
+                                                                </tr
+                                                            {% endfor %}
                                                             <tr>
-                                                                <td class="td-title-1">Dummy Product Name x 2</td>
-                                                                <td class="td-title-2">$1855.00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="td-title-1">Dummy Product Name</td>
-                                                                <td class="td-title-2">$555.00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="td-title-1">Cart Subtotal</td>
-                                                                <td class="td-title-2">$2410.00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="td-title-1">Shipping and Handing</td>
-                                                                <td class="td-title-2">$15.00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="td-title-1">Vat</td>
-                                                                <td class="td-title-2">$00.00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="order-total">Order Total</td>
-                                                                <td class="order-total-price">$2425.00</td>
+                                                                <td class="order-total">TOTAL</td>
+                                                                <td class="order-total-price"> ${{ totalProd }} </td>
                                                             </tr>
                                                         </table>
-                                                    </div> 
-                                                    <!-- payment-method -->
-                                                    <div class="payment-method">
-                                                        <h6 class="widget-title border-left mb-20">payment method</h6>
-                                                        <div id="accordion">
-                                                            <div class="panel">
-                                                                <h4 class="payment-title box-shadow">
-                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#bank-transfer" >
-                                                                    direct bank transfer
-                                                                    </a>
-                                                                </h4>
-                                                                <div id="bank-transfer" class="panel-collapse collapse in" >
-                                                                    <div class="payment-content">
-                                                                    <p>Lorem Ipsum is simply in dummy text of the printing and type setting industry. Lorem Ipsum has been.</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="panel">
-                                                                <h4 class="payment-title box-shadow">
-                                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                                                    cheque payment
-                                                                    </a>
-                                                                </h4>
-                                                                <div id="collapseTwo" class="panel-collapse collapse">
-                                                                    <div class="payment-content">
-                                                                        <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p> 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="panel">
-                                                                <h4 class="payment-title box-shadow">
-                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" >
-                                                                    paypal
-                                                                    </a>
-                                                                </h4>
-                                                                <div id="collapseThree" class="panel-collapse collapse" >
-                                                                    <div class="payment-content">
-                                                                        <p>Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.</p>
-                                                                        <ul class="payent-type mt-10">
-                                                                            <li><a href="#"><img src="img/payment/1.png" alt=""></a></li>
-                                                                            <li><a href="#"><img src="img/payment/2.png" alt=""></a></li>
-                                                                            <li><a href="#"><img src="img/payment/3.png" alt=""></a></li>
-                                                                            <li><a href="#"><img src="img/payment/4.png" alt=""></a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
-                                                    <!-- payment-method end -->
-                                                    <button class="submit-btn-1 mt-30 btn-hover-1" type="submit">place order</button>
                                                 </div>
+                                                <div class="col-md-6">{{botonMP|safe}}</div>
                                             </div>
                                         </form>
                                     </div>
@@ -515,7 +371,7 @@
                                 <div class="tab-pane" id="order-complete">
                                     <div class="order-complete-content box-shadow">
                                         <div class="thank-you p-30 text-center">
-                                            <h6 class="text-black-5 mb-0">Thank you. Your order has been received.</h6>
+                                            <h6 class="text-black-5 mb-0">GRACIAS POR TU COMPRA! YA RECIBIMOS TU PEDIDO.</h6>
                                         </div>
                                         <div class="order-info p-30 mb-10">
                                             <ul class="order-info-list">
@@ -541,66 +397,35 @@
                                             <!-- our order -->
                                             <div class="col-md-6">
                                                 <div class="payment-details p-30">
-                                                    <h6 class="widget-title border-left mb-20">our order</h6>
+                                                    <h6 class="widget-title border-left mb-20">Tu pedido</h6>
                                                     <table>
-                                                        <tr>
-                                                            <td class="td-title-1">Dummy Product Name x 2</td>
-                                                            <td class="td-title-2">$1855.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="td-title-1">Dummy Product Name</td>
-                                                            <td class="td-title-2">$555.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="td-title-1">Cart Subtotal</td>
-                                                            <td class="td-title-2">$2410.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="td-title-1">Shipping and Handing</td>
-                                                            <td class="td-title-2">$15.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="td-title-1">Vat</td>
-                                                            <td class="td-title-2">$00.00</td>
-                                                        </tr>
+                                                        {% for prod in chango %}
+                                                            <tr>
+                                                                <td class="td-title-1">{{ prod.nombre }} x {{ changuito|get_item:prod.id }}</td>
+                                                                <td class="td-title-2">${{ prod.getPrecioWeb }}</td>
+                                                            </tr
+                                                        {% endfor %}
                                                         <tr>
                                                             <td class="order-total">Order Total</td>
-                                                            <td class="order-total-price">$2425.00</td>
+                                                            <td class="order-total-price">${{ totalProd }}</td>
                                                         </tr>
                                                     </table>
                                                 </div>         
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="bill-details p-30">
-                                                    <h6 class="widget-title border-left mb-20">billing details</h6>
+                                                    <h6 class="widget-title border-left mb-20">DETALLES FACTURACION</h6>
                                                     <ul class="bill-address">
                                                         <li>
-                                                            <span>Address:</span>
+                                                            <span>Direccion:</span>
                                                             28 Green Tower, Street Name, New York City, USA
                                                         </li>
                                                         <li>
-                                                            <span>email:</span>
+                                                            <span>Email:</span>
                                                             info@companyname.com
                                                         </li>
                                                         <li>
-                                                            <span>phone : </span>
-                                                            (+880) 19453 821758
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="bill-details pl-30">
-                                                    <h6 class="widget-title border-left mb-20">billing details</h6>
-                                                    <ul class="bill-address">
-                                                        <li>
-                                                            <span>Address:</span>
-                                                            28 Green Tower, Street Name, New York City, USA
-                                                        </li>
-                                                        <li>
-                                                            <span>email:</span>
-                                                            info@companyname.com
-                                                        </li>
-                                                        <li>
-                                                            <span>phone : </span>
+                                                            <span>Telefono : </span>
                                                             (+880) 19453 821758
                                                         </li>
                                                     </ul>
@@ -648,7 +473,94 @@
     <script type="text/javascript">
         
         activarAutocomplete();
+        
+        function validarNumeroSocio(){
+            if ($("#numeroSocio").val() != ""){
+                $.ajax({
+                    type: "POST",
+                    url: "/shop/validarNumeroSocio/",
+                    data: $("#formPasoDos").serialize(),
+                    success: function(data) {
+                        if (data.error == ""){
+                            $("#contacto").val(data.contacto)
+                            $("#mail").val(data.mail)
+                            $("#telefono").val(data.telefono)
+                            $("#domicilio").val(data.direccion)
+                        }else{
+                            alert(data.error)
+                            $("#numeroSocio").val("");
+                            $("#contacto").val("");
+                            $("#mail").val("");
+                            $("#telefono").val("");
+                            $("#domicilio").val("");
+                        }
+                    }
+                });
+            }
+        }
 
+        function crearVenta(){
+
+            if ($("#contacto").val() == ""){
+                alert("El NOMBRE y APELLIDO es obligatorio.")
+                return false;
+            }
+            if ($("#mail").val() == ""){
+                alert("El MAIL es obligatorio.")
+                return false;
+            }
+            if (!caracteresCorreoValido($("#mail").val())){
+                alert("El MAIL tiene un formato incorrecto.")
+                return false;
+            }
+            if ($("#telefono").val() == ""){
+                alert("El TELEFONO es obligatorio.")
+                return false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/shop/crearVenta/",
+                data: $("#formPasoDos").serialize(),
+                success: function(data) {
+                    $("#li-checkout").show();
+                    $("#tab-checkout").addClass( "active" );
+                    $("#tab-checkout").tab('show');
+                    window.scrollTo(0,0);
+                }
+            });
+
+        }
+
+        function pagoFinalizado (json) {
+            if (json.collection_status=='approved'){
+                alert ('Pago acreditado');
+            } else if(json.collection_status=='pending'){
+                alert ('El usuario no completó el pago');
+            } else if(json.collection_status=='in_process'){    
+                alert ('El pago está siendo revisado');    
+            } else if(json.collection_status=='rejected'){
+                alert ('El pago fué rechazado, el usuario puede intentar nuevamente el pago');
+            } else if(json.collection_status==null){
+                alert ('El usuario no completó el proceso de pago, no se ha generado ningún pago');
+            }
+        }
+
+        function caracteresCorreoValido(email){
+            var caract = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+            if (caract.test(email) == false){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+        function carretillaLessProductCart(id){
+            lessProductCart(id);
+            window.location.href = '/shop/carretilla/';
+        }
+
+        
     </script>
 
 </body>

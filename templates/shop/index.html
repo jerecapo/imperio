@@ -172,7 +172,7 @@
                                     <a href="/shop/producto?id={{ oferta.id }}"><img style="width:360px; height:280px;" src="{{ oferta.dameFotoOferta }}" alt=""></a>
                                 </div>
                                 <!--h3 class="banner-title-2"><a href="#">{{ oferta.nombre }}</a></h3 -->
-                                <h3 class="pro-price">$ {{ oferta.precio_venta_publico }}</h3>
+                                <h3 class="pro-price">$ {{ oferta.getPrecioWeb }}</h3>
                                 <div class="banner-button">
                                    <a href="/shop/producto?id={{ oferta.id }}">VER EN TIENDA <i class="zmdi zmdi-long-arrow-right"></i></a> 
                                 </div>
@@ -206,7 +206,7 @@
                                     <a href="/shop/producto?id={{ destacado.id }}"><img style="width:360px; height:280px;" src="{{ destacado.dameFotoOferta }}" alt=""></a>
                                 </div>
                                 <!--h3 class="banner-title-2"><a href="#">{{ destacado.nombre }}</a></h3 -->
-                                <h3 class="pro-price">$ {{ destacado.precio_venta_publico }}</h3>
+                                <h3 class="pro-price">$ {{ destacado.getPrecioWeb }}</h3>
                                 <div class="banner-button">
                                    <a href="/shop/producto?id={{ destacado.id }}">VER EN TIENDA <i class="zmdi zmdi-long-arrow-right"></i></a> 
                                 </div>
