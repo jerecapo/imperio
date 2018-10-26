@@ -115,12 +115,22 @@ def regarcaPasoUno(request):
 def addProductCart(request):
     id_prod             = request.POST.get('id_prod_add', '')
     changuito           = get_changuito(request)
-    if id_prod in changuito:
-        cantidad = changuito.get(id_prod)
-        cantidad = cantidad + 1
-        changuito[id_prod] = cantidad
-    else:
-        changuito[id_prod] = 1
+
+    cantidad = 0
+    for c in changuito:
+        if id_prod == c.producto.id:
+            cantidad = c.cantidad
+            cantidad = cantidad + 1
+            c.cantidad = cantidad
+            c.precio = c.producto.getPrecioWeb() * cantidad
+
+    if cantidad == 0:
+        ch = Changuito()
+        producto = Producto.objects.get(id_prod)
+        ch.producto = producto
+        ch.cantidad = 1
+        ch.precio = producto.getPrecioWeb()
+        changuito.append(ch)
 
     request.session['changuito'] = changuito
 
@@ -137,12 +147,21 @@ def addProductCart(request):
 def lessProductCart(request):
     id_prod    = request.POST.get('id_prod_less', '')
     changuito                   = get_changuito(request)
-    cantidad                    = changuito.get(id_prod)
-    cantidad                    = cantidad - 1
-    if cantidad == 0:
-        del changuito[id_prod]
-    else:
-        changuito[id_prod]          = cantidad
+
+    pos = -1
+    i = 0
+    eliminar = False
+    for c in changuito:
+        if id_prod == c.producto.id:
+            c.cantidad = c.cantidad - 1
+            if c.cantidad == 0:
+                eliminar = True
+                pos = i
+        i = i + 1
+        
+    if eliminar:
+        del changuito[pos]
+
     request.session['changuito']    = changuito
     chango                      = get_chango(request)
     cantProd, totalProd         = get_chango_valores_total(changuito)
@@ -223,9 +242,8 @@ def crearVenta(request):
     cliente.save()
 
     total = 0
-    for key, value in changuito.iteritems():
-        producto = Producto.objects.get(id=key)
-        total = total + producto.getPrecioWeb()
+    for c in changuito:
+        total = total + c.producto.getPrecioWeb()
 
     pedido = Pedido()
     pedido.orden_de_venta = pedido.get_next_orden_venta().get('orden_de_venta')
@@ -250,8 +268,8 @@ def crearVenta(request):
 
     request.session['id_pedido'] = pedido.id
 
-    for key, value in changuito.iteritems():
-        producto = Producto.objects.get(id=key)
+    for c in changuito:
+        producto = c.producto
         productoPedido = ProductoPedido()
         productoPedido.pedido = pedido
         productoPedido.producto = producto
@@ -338,7 +356,7 @@ def get_changuito(request):
     if 'changuito' in request.session:
         return request.session['changuito']
     else:
-        return {}
+        return []
 
 # devuelve los productos en el chango
 def get_chango(request):

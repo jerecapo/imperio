@@ -370,3 +370,14 @@ class Stock(models.Model):
 
     class Meta:
         verbose_name_plural = "Stock" 
+
+class Changuito(models.Model):
+    producto = models.ForeignKey(Producto)
+    cantidad = models.IntegerField()
+    precio = models.FloatField()
+
+    def __unicode__(self):
+        return u'%s' % self.producto.nombre
+        
+    def __str__(self):
+        return self.producto.nombre
